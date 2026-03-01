@@ -19,10 +19,18 @@ let storage: FirebaseStorage;
 let auth: Auth;
 
 if (typeof window !== "undefined") {
-    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    db = getFirestore(app);
-    storage = getStorage(app);
-    auth = getAuth(app);
+    try {
+        app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+        db = getFirestore(app);
+        storage = getStorage(app);
+        auth = getAuth(app);
+    } catch (error) {
+        console.error("Firebase initialization error (check environment variables):", error);
+        app = {} as FirebaseApp;
+        db = {} as Firestore;
+        storage = {} as FirebaseStorage;
+        auth = {} as Auth;
+    }
 } else {
     // Dummy initialization to satisfy TypeScript on the server during SSG/SSR
     app = {} as FirebaseApp;
