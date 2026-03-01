@@ -1,7 +1,7 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getStorage, FirebaseStorage } from "firebase/storage";
+import { getAuth, Auth } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,10 +12,23 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
-const storage = getStorage(app);
-const auth = getAuth(app);
+// Initialize Firebase safely for Next.js SSR
+let app: FirebaseApp;
+let db: Firestore;
+let storage: FirebaseStorage;
+let auth: Auth;
+
+if (typeof window !== "undefined") {
+    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    db = getFirestore(app);
+    storage = getStorage(app);
+    auth = getAuth(app);
+} else {
+    // Dummy initialization to satisfy TypeScript on the server during SSG/SSR
+    app = {} as FirebaseApp;
+    db = {} as Firestore;
+    storage = {} as FirebaseStorage;
+    auth = {} as Auth;
+}
 
 export { app, db, storage, auth };
