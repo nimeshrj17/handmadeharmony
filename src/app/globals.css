@@ -1,0 +1,140 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-fredoka);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Pastel Palette 
+     Cream: #FDFBF7 (Background)
+     Coral: #FF7F50 (Primary)
+     Mint: #B2F7EF (Secondary/Accent)
+     Lavender: #E6E6FA (Muted)
+     Dark Text: #4A4A4A (Foreground - softer than black)
+  */
+
+  --background: #FDFBF7;
+  --foreground: #4A4A4A;
+
+  --card: #FFFFFF;
+  --card-foreground: #4A4A4A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #4A4A4A;
+
+  --primary: #FF7F50;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #B2F7EF;
+  --secondary-foreground: #2D5C58;
+
+  --muted: #E6E6FA;
+  --muted-foreground: #7878A3;
+
+  --accent: #FFDAB9;
+  /* Peach */
+  --accent-foreground: #5C3A2E;
+
+  --destructive: #FF6B6B;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E5E5E5;
+  --input: #E5E5E5;
+  --ring: #FF7F50;
+
+  /* Charts - Keeping defaults for now or adapting */
+  --chart-1: #FF7F50;
+  --chart-2: #B2F7EF;
+  --chart-3: #FFDAB9;
+  --chart-4: #E6E6FA;
+  --chart-5: #FFFDD0;
+}
+
+.dark {
+  /* Dark mode pastel inverse (optional, sticking to light mainly as per brand) */
+  --background: #1A1A1A;
+  --foreground: #FDFBF7;
+
+  --card: #242424;
+  --card-foreground: #FDFBF7;
+
+  --popover: #242424;
+  --popover-foreground: #FDFBF7;
+
+  --primary: #FF7F50;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #2D5C58;
+  --secondary-foreground: #B2F7EF;
+
+  --muted: #2A2A40;
+  --muted-foreground: #A0A0C0;
+
+  --accent: #5C3A2E;
+  --accent-foreground: #FFDAB9;
+
+  --destructive: #CF4444;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #333333;
+  --input: #333333;
+  --ring: #FF7F50;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+}

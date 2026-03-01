@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Products: Public read, Admin write
+    match /products/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Reviews: Public read, Public create, Admin delete
+    match /reviews/{document=**} {
+      allow read: if true;
+      allow create: if true;
+      allow delete: if request.auth != null;
+    }
+
+    // Categories: Public read, Admin write (MISSING IN YOUR RULES)
+    match /categories/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
