@@ -437,7 +437,11 @@ export default function AdminPage() {
                                                     accept="image/*"
                                                     multiple
                                                     className="flex-1 bg-transparent py-2 text-sm outline-none"
-                                                    onChange={(e) => setImageFiles(Array.from(e.target.files || []))}
+                                                    onChange={(e) => {
+                                                        if (e.target.files) {
+                                                            setImageFiles(prev => [...prev, ...Array.from(e.target.files!)]);
+                                                        }
+                                                    }}
                                                 />
                                             </div>
                                             {/* Previews */}

@@ -100,12 +100,21 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                         </ScrollArea>
 
                         <div className="p-6 pt-2 mt-auto border-t bg-muted/10">
-                            <Button className="w-full rounded-full bg-green-600 hover:bg-green-700 text-white gap-2 h-12 text-lg shadow-md hover:shadow-lg transition-all" asChild>
-                                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                                    <MessageCircle size={20} />
-                                    Order on WhatsApp
-                                </a>
-                            </Button>
+                            {product.inStock ? (
+                                <Button className="w-full rounded-full bg-green-600 hover:bg-green-700 text-white gap-2 h-12 text-lg shadow-md hover:shadow-lg transition-all" asChild>
+                                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                                        <MessageCircle size={20} />
+                                        Order on WhatsApp
+                                    </a>
+                                </Button>
+                            ) : (
+                                <Button className="w-full rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground gap-2 h-12 text-lg shadow-md hover:shadow-lg transition-all" asChild>
+                                    <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hi, I saw that ${product.name} is out of stock. I would like to get it made!`)}`} target="_blank" rel="noopener noreferrer">
+                                        <MessageCircle size={20} />
+                                        Contact us to get it made
+                                    </a>
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>

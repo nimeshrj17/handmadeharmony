@@ -35,11 +35,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
                                 No Image
                             </div>
                         )}
-                        {!product.inStock && (
-                            <div className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded-full font-bold">
-                                Out of Stock
-                            </div>
-                        )}
+                        <div className="absolute top-2 right-2 bg-destructive/90 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider text-center max-w-[80%] shadow-md backdrop-blur-sm leading-tight">
+                            Contact us to get it made
+                        </div>
                         {product.hasFreePattern && (
                             <div className="absolute bottom-2 left-2 bg-secondary text-secondary-foreground text-xs px-2 py-1 rounded-full font-bold shadow-sm">
                                 Free Pattern
