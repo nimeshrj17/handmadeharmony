@@ -18,7 +18,7 @@ const Footer = () => {
                     <div className="space-y-4">
                         <h3 className="font-heading text-xl font-bold text-primary">Handmade Harmony</h3>
                         <p className="text-sm text-muted-foreground max-w-xs">
-                            Smile stitched. Joy delivered. Handcrafted crochet dolls and accessories made with love by Dharati.
+                            Smile stitched. Joy delivered. Handcrafted crochet dolls and accessories made with love by Dharita.
                         </p>
                     </div>
 
@@ -51,7 +51,7 @@ const Footer = () => {
                             </a>
                         </div>
                         <p className="text-xs text-muted-foreground mt-4">
-                            © {currentYear} Crochetnook by Dharati. All rights reserved.
+                            © {currentYear} Crochetnook by Dharita. All rights reserved.
                         </p>
                     </div>
                 </div>
