@@ -50,9 +50,14 @@ const Footer = () => {
                                 <span className="sr-only">Email</span>
                             </a>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-4">
-                            © {currentYear} Crochetnook by Dharita. All rights reserved.
-                        </p>
+                        <div className="mt-4 space-y-1">
+                            <p className="text-xs text-muted-foreground">
+                                © {currentYear} Crochetnook by Dharita. All rights reserved.
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                                Built with <span className="text-red-500">❤️</span> by <a href="https://www.stacktribe.dev/" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-primary transition-colors">StackTribe</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
