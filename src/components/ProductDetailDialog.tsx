@@ -109,9 +109,9 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                 </Button>
                             ) : (
                                 <Button className="w-full rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground gap-2 h-12 text-lg shadow-md hover:shadow-lg transition-all" asChild>
-                                    <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hi, I saw that ${product.name} is out of stock. I would like to get it made!`)}`} target="_blank" rel="noopener noreferrer">
+                                    <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hi, I saw that ${product.name} is out of stock. I would like to get it back in stock!`)}`} target="_blank" rel="noopener noreferrer">
                                         <MessageCircle size={20} />
-                                        Contact us to get it made
+                                        Contact to get it back in stock
                                     </a>
                                 </Button>
                             )}
