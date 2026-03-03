@@ -12,10 +12,16 @@ service cloud.firestore {
       allow read: if true;
       allow create: if true;
       allow delete: if request.auth != null;
+    } 
+
+    // Categories: Public read, Admin write
+    match /categories/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
     }
 
-    // Categories: Public read, Admin write (MISSING IN YOUR RULES)
-    match /categories/{document=**} {
+    // Classes: Public read, Admin write
+    match /classes/{document=**} {
       allow read: if true;
       allow write: if request.auth != null;
     }
