@@ -202,3 +202,50 @@ export const deleteCategory = async (name: string): Promise<void> => {
         throw error;
     }
 };
+
+// Classes
+const CLASSES_COLLECTION = "classes";
+import { ClassVideo } from "./types";
+
+export const getClasses = async (): Promise<ClassVideo[]> => {
+    try {
+        const querySnapshot = await getDocs(collection(db, CLASSES_COLLECTION));
+        const classes: ClassVideo[] = [];
+        querySnapshot.forEach((doc) => {
+            classes.push({ id: doc.id, ...doc.data() } as ClassVideo);
+        });
+
+        // Sort by creation date (newest first) if createdAt exists
+        return classes.sort((a, b) => {
+            const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+            const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+            return timeB - timeA;
+        });
+    } catch (error) {
+        console.error("Error getting classes: ", error);
+        return [];
+    }
+};
+
+export const addClass = async (classVideo: Omit<ClassVideo, "id" | "createdAt">): Promise<string> => {
+    try {
+        const classData = {
+            ...classVideo,
+            createdAt: serverTimestamp(),
+        };
+        const docRef = await addDoc(collection(db, CLASSES_COLLECTION), classData);
+        return docRef.id;
+    } catch (error) {
+        console.error("Error adding class: ", error);
+        throw error;
+    }
+};
+
+export const deleteClass = async (id: string) => {
+    try {
+        await deleteDoc(doc(db, CLASSES_COLLECTION, id));
+    } catch (error) {
+        console.error("Error deleting class: ", error);
+        throw error;
+    }
+};

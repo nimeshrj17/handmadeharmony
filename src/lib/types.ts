@@ -22,3 +22,11 @@ export interface Review {
     image?: string;
     createdAt?: any;
 }
+
+export interface ClassVideo {
+    id?: string;
+    title: string;
+    youtubeUrl: string;
+    thumbnailUrl: string;
+    createdAt?: any;
+}

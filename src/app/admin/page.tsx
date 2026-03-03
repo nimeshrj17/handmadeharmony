@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Edit, Trash2, X, Upload } from "lucide-react";
-import { getProducts, addProduct, deleteProduct, updateProduct, getReviews, deleteReview, uploadImage, getCategories, addCategory, deleteCategory } from "@/lib/db";
-import { Product, Review } from "@/lib/types";
+import { getProducts, addProduct, deleteProduct, updateProduct, getReviews, deleteReview, uploadImage, getCategories, addCategory, deleteCategory, getClasses, addClass, deleteClass } from "@/lib/db";
+import { Product, Review, ClassVideo } from "@/lib/types";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "@/lib/firebase";
 import { AddReviewDialog } from "@/components/AddReviewDialog";
@@ -22,6 +22,10 @@ export default function AdminPage() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [newCategoryName, setNewCategoryName] = useState("");
+
+    const [classes, setClasses] = useState<ClassVideo[]>([]);
+    const [newClassTitle, setNewClassTitle] = useState("");
+    const [newClassUrl, setNewClassUrl] = useState("");
 
     const [isAdding, setIsAdding] = useState(false);
     const [newProduct, setNewProduct] = useState<Partial<Product>>({
@@ -47,10 +51,12 @@ export default function AdminPage() {
                 fetchProducts();
                 fetchReviews();
                 fetchCategories();
+                fetchClasses();
             } else {
                 setIsAuthenticated(false);
                 setProducts([]);
                 setReviews([]);
+                setClasses([]);
             }
         });
         return () => unsubscribe();
@@ -72,6 +78,62 @@ export default function AdminPage() {
         // Set default category for new product if not set
         if (!newProduct.category && data.length > 0) {
             setNewProduct(prev => ({ ...prev, category: data[0] }));
+        }
+    };
+
+    const fetchClasses = async () => {
+        const data = await getClasses();
+        setClasses(data);
+    };
+
+    // Extract YouTube ID to get thumbnail
+    const getYouTubeThumbnail = (url: string) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        if (match && match[2].length === 11) {
+            return `https://img.youtube.com/vi/${match[2]}/maxresdefault.jpg`;
+        }
+        return "";
+    };
+
+    const handleAddClass = async () => {
+        if (!newClassTitle.trim() || !newClassUrl.trim()) {
+            alert("Title and YouTube URL are required.");
+            return;
+        }
+
+        const thumbnailUrl = getYouTubeThumbnail(newClassUrl);
+        if (!thumbnailUrl) {
+            alert("Invalid YouTube URL. Please provide a valid link.");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await addClass({
+                title: newClassTitle.trim(),
+                youtubeUrl: newClassUrl.trim(),
+                thumbnailUrl
+            });
+            setNewClassTitle("");
+            setNewClassUrl("");
+            fetchClasses();
+        } catch (error) {
+            console.error("Failed to add class", error);
+            alert("Failed to add class. Check permissions.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteClass = async (id: string) => {
+        if (confirm("Are you sure you want to delete this class video?")) {
+            try {
+                await deleteClass(id);
+                fetchClasses();
+            } catch (error) {
+                console.error("Failed to delete class", error);
+            }
         }
     };
 
@@ -609,6 +671,79 @@ export default function AdminPage() {
                                             <td className="p-4 truncate max-w-xs">{review.reviewText}</td>
                                             <td className="p-4 text-right">
                                                 <Button variant="ghost" size="icon" onClick={() => handleDeleteReview(review.id)}>
+                                                    <Trash2 size={16} className="text-destructive" />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {/* Classes Section */}
+                <div className="space-y-6 pt-8 border-t">
+                    <h2 className="text-2xl font-bold font-heading">Classes (YouTube Videos)</h2>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-lg">Add New Class</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <Input
+                                    placeholder="Video Title (e.g., Crochet Basics)"
+                                    value={newClassTitle}
+                                    onChange={(e) => setNewClassTitle(e.target.value)}
+                                />
+                                <div className="flex gap-4">
+                                    <Input
+                                        placeholder="YouTube URL (https://youtube.com/watch?v=...)"
+                                        value={newClassUrl}
+                                        onChange={(e) => setNewClassUrl(e.target.value)}
+                                        className="flex-1"
+                                    />
+                                    <Button onClick={handleAddClass} disabled={loading || !newClassTitle.trim() || !newClassUrl.trim()}>
+                                        <Plus size={16} className="mr-2" /> Add Video
+                                    </Button>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
+                        <table className="w-full text-left text-sm">
+                            <thead className="bg-muted text-muted-foreground">
+                                <tr>
+                                    <th className="p-4 font-medium w-32">Thumbnail</th>
+                                    <th className="p-4 font-medium">Title</th>
+                                    <th className="p-4 font-medium">URL</th>
+                                    <th className="p-4 font-medium text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y">
+                                {classes.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={4} className="p-8 text-center text-muted-foreground">
+                                            No classes added yet. Add a YouTube video above!
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    classes.map((cls) => (
+                                        <tr key={cls.id} className="hover:bg-muted/10">
+                                            <td className="p-4">
+                                                <div className="w-24 h-16 rounded overflow-hidden bg-muted">
+                                                    <img src={cls.thumbnailUrl} alt={cls.title} className="w-full h-full object-cover" />
+                                                </div>
+                                            </td>
+                                            <td className="p-4 font-medium">{cls.title}</td>
+                                            <td className="p-4">
+                                                <a href={cls.youtubeUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                                    {cls.youtubeUrl.substring(0, 40)}...
+                                                </a>
+                                            </td>
+                                            <td className="p-4 text-right">
+                                                <Button variant="ghost" size="icon" onClick={() => handleDeleteClass(cls.id!)}>
                                                     <Trash2 size={16} className="text-destructive" />
                                                 </Button>
                                             </td>
