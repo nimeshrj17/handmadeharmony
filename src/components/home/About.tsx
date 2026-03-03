@@ -46,17 +46,29 @@ const About = () => {
                         <div className="inline-block rounded-full bg-secondary/30 px-3 py-1 text-sm font-medium text-secondary-foreground">
                             About the Artist
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
-                            Crafting Joy, One Stitch at a Time
+                        <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground leading-tight">
+                            From Learning Loops to Living the Dream 🧶✨
                         </h2>
-                        <p className="text-lg text-muted-foreground leading-relaxed">
-                            Hi, I'm Dharita! Welcome to Handmade Harmony (formerly Crochetnook).
-                            What started as a hobby has turned into a passion for creating unique, handcrafted pieces that bring smiles to faces.
-                        </p>
-                        <p className="text-muted-foreground">
-                            Every item is made with premium yarn, attention to detail, and a whole lot of love.
-                            Whether you need a custom gift or a treat for yourself, I'm here to make it special.
-                        </p>
+                        <div className="space-y-4 text-muted-foreground">
+                            <p className="text-lg leading-relaxed text-foreground/80">
+                                If you’ve ever picked up a crochet hook “just to try” and ended up completely falling in love… hi, welcome to my world.
+                            </p>
+                            <p>
+                                I’m Dharita — an amigurumi and crochet artist who started as a complete beginner. With zero experience but endless curiosity, I learned crochet step by step and later took a dedicated amigurumi course to truly understand the art of bringing characters to life.
+                            </p>
+                            <p>
+                                There was no big plan — just practice, patience, and plenty of undone stitches. I frogged projects, fixed tiny details at midnight, and kept learning with every loop.
+                            </p>
+                            <p>
+                                Somewhere between those learning phases and finished plushies, Handmade Harmony was born — a space where yarn transforms into tiny companions filled with warmth and personality.
+                            </p>
+                            <p>
+                                Each piece is thoughtfully handcrafted with premium yarn, precision, and lots of love.
+                            </p>
+                            <p className="font-medium text-primary">
+                                Because for me, amigurumi isn’t just crochet — it’s a dream built one stitch at a time. 💛
+                            </p>
+                        </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
                             {SERVICES.map((service, index) => (
