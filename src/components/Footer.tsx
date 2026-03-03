@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Instagram, Facebook, Mail } from "lucide-react";
+import { Instagram, Facebook, Mail, Youtube } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 
 const Footer = () => {
@@ -40,6 +40,10 @@ const Footer = () => {
                             <a href={siteConfig.contact.instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded-full shadow-sm hover:scale-110 transition-transform text-primary">
                                 <Instagram className="h-5 w-5" />
                                 <span className="sr-only">Instagram</span>
+                            </a>
+                            <a href={siteConfig.contact.youtubeUrl} target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded-full shadow-sm hover:scale-110 transition-transform text-primary">
+                                <Youtube className="h-5 w-5" />
+                                <span className="sr-only">YouTube</span>
                             </a>
                             <a href="#" className="bg-white p-2 rounded-full shadow-sm hover:scale-110 transition-transform text-primary">
                                 <Facebook className="h-5 w-5" />

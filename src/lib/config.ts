@@ -5,5 +5,6 @@ export const siteConfig = {
         instagram: "crochet_nook_by_dharita",
         instagramUrl: "https://www.instagram.com/crochet_nook_by_dharita/",
         email: "crochetnookdharita@gmail.com",
+        youtubeUrl: "https://youtube.com/@crochetnookdharita?si=DwsmNOOYSWtCmtuO",
     }
 };
