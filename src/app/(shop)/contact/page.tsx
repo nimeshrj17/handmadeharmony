@@ -58,8 +58,8 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-foreground">Email</h4>
-                                    <a href="mailto:hello@handmadeharmony.com" className="text-muted-foreground hover:text-primary transition-colors">
-                                        hello@handmadeharmony.com
+                                    <a href="mailto:crochetnookdharita@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                                        crochetnookdharita@gmail.com
                                     </a>
                                 </div>
                             </div>

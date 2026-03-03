@@ -29,7 +29,7 @@ const Footer = () => {
                             <li><Link href="/products" className="hover:text-primary transition-colors">Shop Collection</Link></li>
                             <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
                             <li><Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-                            <li><Link href="/admin" className="hover:text-primary transition-colors text-xs text-muted-foreground/50">Admin Login</Link></li>
+                            <li><Link href="/admin" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-xs text-muted-foreground/50">Admin Login</Link></li>
                         </ul>
                     </div>
 
@@ -45,7 +45,7 @@ const Footer = () => {
                                 <Facebook className="h-5 w-5" />
                                 <span className="sr-only">Facebook</span>
                             </a>
-                            <a href="mailto:hello@handmadeharmony.com" className="bg-white p-2 rounded-full shadow-sm hover:scale-110 transition-transform text-primary">
+                            <a href="mailto:crochetnookdharita@gmail.com" className="bg-white p-2 rounded-full shadow-sm hover:scale-110 transition-transform text-primary">
                                 <Mail className="h-5 w-5" />
                                 <span className="sr-only">Email</span>
                             </a>
