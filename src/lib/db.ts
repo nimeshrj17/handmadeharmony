@@ -42,17 +42,19 @@ export const uploadImage = async (imageFile: File): Promise<string> => {
     }
 }
 
-export const addProduct = async (product: Omit<Product, "id">, imageFile?: File): Promise<string> => {
+export const addProduct = async (product: Omit<Product, "id">, imageFiles?: File[]): Promise<string> => {
     try {
-        let imageUrl = "";
-        if (imageFile) {
-            imageUrl = await uploadImage(imageFile);
+        const imageUrls: string[] = [];
+        if (imageFiles && imageFiles.length > 0) {
+            const uploadPromises = imageFiles.map(file => uploadImage(file));
+            const uploadedUrls = await Promise.all(uploadPromises);
+            imageUrls.push(...uploadedUrls);
         }
 
-        // Add image url to product
+        // Add image urls to product
         const productData = {
             ...product,
-            images: imageUrl ? [imageUrl] : (product.images || []),
+            images: [...(product.images || []), ...imageUrls],
             createdAt: serverTimestamp(),
         };
 

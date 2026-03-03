@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Product } from "@/lib/types";
 import Image from "next/image";
@@ -14,6 +15,7 @@ interface ProductDetailDialogProps {
 }
 
 export function ProductDetailDialog({ product, children }: ProductDetailDialogProps) {
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const phoneNumber = siteConfig.contact.phone;
     const message = `Hi, I want to order ${product.name} priced at ₹${product.price}`;
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -26,23 +28,40 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
             <DialogContent className="sm:max-w-[800px] p-0 overflow-hidden bg-background">
                 <div className="grid md:grid-cols-2 h-[80vh] md:h-[500px]">
                     {/* Image Section - Banner Style */}
-                    <div className="relative h-64 md:h-full w-full bg-muted">
-                        {product.images[0] ? (
-                            <Image
-                                src={product.images[0]}
-                                alt={product.name}
-                                fill
-                                className="object-cover"
-                            />
-                        ) : (
-                            <div className="flex items-center justify-center h-full text-muted-foreground">
-                                No Image
+                    <div className="relative h-64 md:h-full w-full bg-muted flex flex-col">
+                        <div className="relative flex-1 w-full bg-muted">
+                            {product.images[selectedImageIndex] ? (
+                                <Image
+                                    src={product.images[selectedImageIndex]}
+                                    alt={product.name}
+                                    fill
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <div className="flex items-center justify-center h-full text-muted-foreground">
+                                    No Image
+                                </div>
+                            )}
+                            {/* Price Badge Overlay */}
+                            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm z-10">
+                                <span className="font-bold text-lg text-primary">₹{product.price}</span>
+                            </div>
+                        </div>
+
+                        {/* Thumbnails */}
+                        {product.images.length > 1 && (
+                            <div className="flex gap-2 p-3 bg-background border-t overflow-x-auto no-scrollbar">
+                                {product.images.map((img, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => setSelectedImageIndex(idx)}
+                                        className={`relative w-14 h-14 rounded-md overflow-hidden flex-shrink-0 border-2 transition-all ${selectedImageIndex === idx ? 'border-primary ring-2 ring-primary/20' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                                    >
+                                        <Image src={img} alt={`${product.name} thumbnail ${idx + 1}`} fill className="object-cover" />
+                                    </button>
+                                ))}
                             </div>
                         )}
-                        {/* Price Badge Overlay */}
-                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-                            <span className="font-bold text-lg text-primary">₹{product.price}</span>
-                        </div>
                     </div>
 
                     {/* Content Section */}

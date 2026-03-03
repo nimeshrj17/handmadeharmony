@@ -39,7 +39,7 @@ export default function AdminPage() {
         freePatternDetails: "",
         availableColors: []
     });
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [editingProductId, setEditingProductId] = useState<string | null>(null);
 
     // Initial Fetch & Auth Listener
@@ -193,12 +193,12 @@ export default function AdminPage() {
                 hasFreePattern: newProduct.hasFreePattern || false,
                 freePatternDetails: newProduct.freePatternDetails || "",
                 images: []
-            }, imageFile || undefined);
+            }, imageFiles);
 
             await fetchProducts();
             setIsAdding(false);
             setNewProduct({ name: "", price: 0, category: "Plushies", description: "", inStock: true });
-            setImageFile(null);
+            setImageFiles([]);
         } catch (error: any) {
             console.error(error);
             if (error.code === 'permission-denied') {
@@ -226,9 +226,10 @@ export default function AdminPage() {
                     category: newProduct.category,
                 };
 
-                if (imageFile) {
-                    const imageUrl = await uploadImage(imageFile);
-                    updates.images = [imageUrl];
+                if (imageFiles && imageFiles.length > 0) {
+                    const uploadPromises = imageFiles.map(file => uploadImage(file));
+                    const newUrls = await Promise.all(uploadPromises);
+                    updates.images = [...(newProduct.images || []), ...newUrls];
                 }
 
                 await updateProduct(editingProductId, updates);
@@ -244,8 +245,8 @@ export default function AdminPage() {
                     inStock: newProduct.inStock || true,
                     hasFreePattern: newProduct.hasFreePattern || false,
                     freePatternDetails: newProduct.freePatternDetails || "",
-                    images: []
-                }, imageFile || undefined);
+                    images: newProduct.images || []
+                }, imageFiles);
             }
 
             await fetchProducts();
@@ -282,7 +283,7 @@ export default function AdminPage() {
             freePatternDetails: "",
             availableColors: []
         });
-        setImageFile(null);
+        setImageFiles([]);
     };
 
     const handleDelete = async (id: string) => {
@@ -385,87 +386,6 @@ export default function AdminPage() {
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-bold font-heading">Product Management</h1>
                         <div className="flex gap-4">
-                            <Button
-                                variant="secondary"
-                                onClick={async () => {
-                                    if (confirm("This will add 5 new products to your database. Continue?")) {
-                                        setLoading(true);
-                                        const productsToSeed = [
-                                            {
-                                                name: "Red Bird Keychain",
-                                                slug: "red-bird-keychain",
-                                                price: 299,
-                                                description: "A vibrant red crochet bird keychain with white eyes, perfect for adding a pop of color to your keys or bag.",
-                                                images: ["/images/product-red-bird.jpg"],
-                                                category: "Bag & Key Charms",
-                                                availableColors: ["Red"],
-                                                isFeatured: true,
-                                                inStock: true
-                                            },
-                                            {
-                                                name: "Grey Bear with Heart",
-                                                slug: "grey-bear-with-heart",
-                                                price: 499,
-                                                description: "An adorable grey crochet bear holding a pink heart, a sweet gift for someone special.",
-                                                images: ["/images/product-grey-bear.jpg"],
-                                                category: "Toddler Treasures",
-                                                availableColors: ["Grey"],
-                                                isFeatured: true,
-                                                inStock: true
-                                            },
-                                            {
-                                                name: "Elephant Plushie",
-                                                slug: "elephant-plushie",
-                                                price: 799,
-                                                description: "A cute and soft crochet elephant plushie, perfect for little hands to hold and play with.",
-                                                images: ["/images/product-elephant.jpg"],
-                                                category: "Toddler Treasures",
-                                                availableColors: ["Blue"],
-                                                isFeatured: true,
-                                                inStock: true
-                                            },
-                                            {
-                                                name: "Bala Krishna Doll",
-                                                slug: "bala-krishna-doll",
-                                                price: 1599,
-                                                description: "A beautifully detailed crochet doll of baby Krishna with his butter pot, crafted with devotion.",
-                                                images: ["/images/product-krishna.jpg"],
-                                                category: "Comfort Creations",
-                                                availableColors: ["Light Blue"],
-                                                isFeatured: true,
-                                                inStock: true
-                                            },
-                                            {
-                                                name: "Captain America Doll",
-                                                slug: "captain-america-doll",
-                                                price: 1299,
-                                                description: "A hero doll for your little one! Handcrafted Captain America crochet doll with shield.",
-                                                images: ["/images/product-captain-america.jpg"],
-                                                category: "Comfort Creations",
-                                                availableColors: ["Blue", "Red", "White"],
-                                                isFeatured: false,
-                                                inStock: true
-                                            }
-                                        ];
-
-                                        try {
-                                            for (const p of productsToSeed) {
-                                                await addProduct(p);
-                                            }
-                                            alert("Seeding successful!");
-                                            fetchProducts();
-                                        } catch (e) {
-                                            console.error(e);
-                                            alert("Seeding failed. Check console.");
-                                        } finally {
-                                            setLoading(false);
-                                        }
-                                    }
-                                }}
-                                disabled={loading}
-                            >
-                                Seed New Products
-                            </Button>
                             <Button onClick={() => { cancelEdit(); setIsAdding(true); }} className="gap-2">
                                 <Plus size={16} /> Add Product
                             </Button>
@@ -509,14 +429,58 @@ export default function AdminPage() {
                                                 <option key={cat} value={cat}>{cat}</option>
                                             ))}
                                         </select>
-                                        <div className="flex items-center gap-2 border rounded-md px-3">
-                                            <Upload size={16} className="text-muted-foreground" />
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                className="flex-1 bg-transparent py-2 text-sm outline-none"
-                                                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                                            />
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2 border rounded-md px-3 bg-background">
+                                                <Upload size={16} className="text-muted-foreground min-w-[16px]" />
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    multiple
+                                                    className="flex-1 bg-transparent py-2 text-sm outline-none"
+                                                    onChange={(e) => setImageFiles(Array.from(e.target.files || []))}
+                                                />
+                                            </div>
+                                            {/* Previews */}
+                                            {((newProduct.images?.length || 0) > 0 || imageFiles.length > 0) && (
+                                                <div className="flex flex-wrap gap-2 mt-2">
+                                                    {newProduct.images?.map((url, i) => (
+                                                        <div key={`existing-${i}`} className="relative w-16 h-16 rounded-md overflow-hidden border">
+                                                            <img src={url} alt={`Existing ${i}`} className="w-full h-full object-cover" />
+                                                            <button
+                                                                type="button"
+                                                                title="Remove existing image"
+                                                                className="absolute top-0 right-0 bg-destructive text-destructive-foreground p-0.5 rounded-bl-md"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    const updatedImages = [...(newProduct.images || [])];
+                                                                    updatedImages.splice(i, 1);
+                                                                    setNewProduct({ ...newProduct, images: updatedImages });
+                                                                }}
+                                                            >
+                                                                <X size={12} />
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                    {imageFiles.map((file, i) => (
+                                                        <div key={`new-${i}`} className="relative w-16 h-16 rounded-md overflow-hidden border opacity-80">
+                                                            <img src={URL.createObjectURL(file)} alt={`New ${i}`} className="w-full h-full object-cover" />
+                                                            <button
+                                                                type="button"
+                                                                title="Remove selected file"
+                                                                className="absolute top-0 right-0 bg-muted/80 text-foreground p-0.5 rounded-bl-md hover:bg-destructive hover:text-destructive-foreground"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    const updatedFiles = [...imageFiles];
+                                                                    updatedFiles.splice(i, 1);
+                                                                    setImageFiles(updatedFiles);
+                                                                }}
+                                                            >
+                                                                <X size={12} />
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <Textarea
