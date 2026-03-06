@@ -33,7 +33,8 @@ export const getProducts = async (): Promise<Product[]> => {
 
 export const uploadImage = async (imageFile: File): Promise<string> => {
     try {
-        const storageRef = ref(storage, `products/${Date.now()}_${imageFile.name}`);
+        const uniqueId = Math.random().toString(36).substring(7);
+        const storageRef = ref(storage, `products/${Date.now()}_${uniqueId}_${imageFile.name}`);
         const snapshot = await uploadBytes(storageRef, imageFile);
         return await getDownloadURL(snapshot.ref);
     } catch (error) {

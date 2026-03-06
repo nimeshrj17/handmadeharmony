@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, ShoppingBag, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
@@ -30,8 +31,15 @@ const Navbar = () => {
             <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    {/* Placeholder for Logo Image if available, else text */}
-                    <span className="font-heading text-xl font-bold text-primary md:text-2xl">
+                    <div className="relative w-10 h-10 overflow-hidden rounded-full border border-primary/10 shadow-sm">
+                        <Image
+                            src="/logo.jpg"
+                            alt="Handmade Harmony Logo"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    <span className="font-heading text-lg font-bold text-foreground md:text-xl">
                         Handmade Harmony
                     </span>
                 </Link>

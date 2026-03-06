@@ -171,44 +171,6 @@ export default function AdminPage() {
         await auth.signOut();
     };
 
-    const handleAddProduct = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            if (!newProduct.name || !newProduct.price) {
-                alert("Name and Price are required");
-                setLoading(false);
-                return;
-            }
-
-            await addProduct({
-                name: newProduct.name!,
-                slug: newProduct.name!.toLowerCase().replace(/\s+/g, '-'),
-                price: Number(newProduct.price),
-                description: newProduct.description || "",
-                category: newProduct.category || "Toddler Treasures",
-                availableColors: newProduct.availableColors || [],
-                isFeatured: newProduct.isFeatured || false,
-                inStock: newProduct.inStock || true,
-                hasFreePattern: newProduct.hasFreePattern || false,
-                freePatternDetails: newProduct.freePatternDetails || "",
-                images: []
-            }, imageFiles);
-
-            await fetchProducts();
-            setIsAdding(false);
-            setNewProduct({ name: "", price: 0, category: "Plushies", description: "", inStock: true });
-            setImageFiles([]);
-        } catch (error: any) {
-            console.error(error);
-            if (error.code === 'permission-denied') {
-                alert("You do not have permission to add products.");
-            } else {
-                alert("Failed to add product");
-            }
-        }
-        setLoading(false);
-    };
 
     const handleSaveProduct = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -440,6 +402,7 @@ export default function AdminPage() {
                                                     onChange={(e) => {
                                                         if (e.target.files) {
                                                             setImageFiles(prev => [...prev, ...Array.from(e.target.files!)]);
+                                                            e.target.value = ''; // Reset input so same file can be selected again
                                                         }
                                                     }}
                                                 />

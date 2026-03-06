@@ -15,6 +15,10 @@ const fredoka = Fredoka({
 export const metadata: Metadata = {
   title: "Handmade Harmony",
   description: "Smile stitched. Joy delivered.",
+  icons: {
+    icon: "/favicon.jpg",
+    apple: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({
