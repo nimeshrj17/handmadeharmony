@@ -252,3 +252,40 @@ export const deleteClass = async (id: string) => {
         throw error;
     }
 };
+// Enquiries
+const ENQUIRIES_COLLECTION = "enquiries";
+
+export const submitEnquiry = async (enquiry: { name: string; email: string; message: string }): Promise<string> => {
+    try {
+        const docRef = await addDoc(collection(db, ENQUIRIES_COLLECTION), {
+            ...enquiry,
+            createdAt: serverTimestamp(),
+            // This 'mail' object is for the 'Trigger Email from Firestore' extension
+            mail: {
+                to: "crochetnookdharita@gmail.com",
+                replyTo: enquiry.email,
+                message: {
+                    subject: `New Enquiry from ${enquiry.name}`,
+                    text: `You have a new message from ${enquiry.name} (${enquiry.email}):\n\n${enquiry.message}`,
+                    html: `
+                        <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                            <h2 style="color: #FF8A65;">New Enquiry Received</h2>
+                            <p><strong>Name:</strong> ${enquiry.name}</p>
+                            <p><strong>Email:</strong> ${enquiry.email}</p>
+                            <p><strong>Message:</strong></p>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 10px;">
+                                ${enquiry.message.replace(/\n/g, "<br>")}
+                            </div>
+                            <hr style="margin-top: 20px; border: 0; border-top: 1px solid #eee;">
+                            <p style="font-size: 12px; color: #888;">This email was sent automatically from your Handmade Harmony website.</p>
+                        </div>
+                    `,
+                },
+            },
+        });
+        return docRef.id;
+    } catch (error) {
+        console.error("Error submitting enquiry: ", error);
+        throw error;
+    }
+};
