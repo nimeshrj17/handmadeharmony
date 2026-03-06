@@ -286,7 +286,7 @@ export const deleteEnquiry = async (id: string) => {
     }
 };
 
-export const submitEnquiry = async (enquiry: { name: string; email: string; message: string }): Promise<string> => {
+export const submitEnquiry = async (enquiry: { name: string; email: string; phone: string; message: string }): Promise<string> => {
     try {
         const docRef = await addDoc(collection(db, ENQUIRIES_COLLECTION), {
             ...enquiry,

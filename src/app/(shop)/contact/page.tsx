@@ -8,11 +8,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Mail, Phone, Instagram, Send, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/lib/config";
+import { submitEnquiry } from "@/lib/db";
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
+        phone: "",
         message: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,15 +24,16 @@ export default function ContactPage() {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate Firestore delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        // TODO: Save to Firestore
-        console.log("Form submitted:", formData);
-
-        setIsSubmitting(false);
-        setIsSuccess(true);
-        setFormData({ name: "", email: "", message: "" });
+        try {
+            await submitEnquiry(formData);
+            setIsSuccess(true);
+            setFormData({ name: "", email: "", phone: "", message: "" });
+        } catch (error) {
+            console.error("Failed to submit enquiry:", error);
+            alert("Something went wrong. Please try again or contact via WhatsApp.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -146,6 +149,17 @@ export default function ContactPage() {
                                             required
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="phone" className="text-sm font-medium">Phone Number</label>
+                                        <Input
+                                            id="phone"
+                                            type="tel"
+                                            placeholder="Your Phone Number"
+                                            required
+                                            value={formData.phone}
+                                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-2">

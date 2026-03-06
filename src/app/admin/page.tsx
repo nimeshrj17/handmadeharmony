@@ -715,6 +715,7 @@ export default function AdminPage() {
                                     <th className="p-4 font-medium">Date</th>
                                     <th className="p-4 font-medium">Name</th>
                                     <th className="p-4 font-medium">Email</th>
+                                    <th className="p-4 font-medium">Phone</th>
                                     <th className="p-4 font-medium">Message</th>
                                     <th className="p-4 font-medium text-right">Actions</th>
                                 </tr>
@@ -722,7 +723,7 @@ export default function AdminPage() {
                             <tbody className="divide-y">
                                 {enquiries.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                                        <td colSpan={6} className="p-8 text-center text-muted-foreground">
                                             No enquiries found.
                                         </td>
                                     </tr>
@@ -738,6 +739,7 @@ export default function AdminPage() {
                                                     {enq.email}
                                                 </a>
                                             </td>
+                                            <td className="p-4">{enq.phone}</td>
                                             <td className="p-4 max-w-xs overflow-hidden">
                                                 <p className="whitespace-pre-wrap">{enq.message}</p>
                                             </td>
