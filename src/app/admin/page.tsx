@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Edit, Trash2, X, Upload } from "lucide-react";
-import { getProducts, addProduct, deleteProduct, updateProduct, getReviews, deleteReview, uploadImage, getCategories, addCategory, deleteCategory, getClasses, addClass, deleteClass } from "@/lib/db";
-import { Product, Review, ClassVideo } from "@/lib/types";
+import { getProducts, addProduct, deleteProduct, updateProduct, getReviews, deleteReview, uploadImage, getCategories, addCategory, deleteCategory, getClasses, addClass, deleteClass, getEnquiries, deleteEnquiry } from "@/lib/db";
+import { Product, Review, ClassVideo, Enquiry } from "@/lib/types";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "@/lib/firebase";
 import { AddReviewDialog } from "@/components/AddReviewDialog";
@@ -26,6 +26,8 @@ export default function AdminPage() {
     const [classes, setClasses] = useState<ClassVideo[]>([]);
     const [newClassTitle, setNewClassTitle] = useState("");
     const [newClassUrl, setNewClassUrl] = useState("");
+
+    const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
 
     const [isAdding, setIsAdding] = useState(false);
     const [newProduct, setNewProduct] = useState<Partial<Product>>({
@@ -52,11 +54,13 @@ export default function AdminPage() {
                 fetchReviews();
                 fetchCategories();
                 fetchClasses();
+                fetchEnquiries();
             } else {
                 setIsAuthenticated(false);
                 setProducts([]);
                 setReviews([]);
                 setClasses([]);
+                setEnquiries([]);
             }
         });
         return () => unsubscribe();
@@ -84,6 +88,22 @@ export default function AdminPage() {
     const fetchClasses = async () => {
         const data = await getClasses();
         setClasses(data);
+    };
+
+    const fetchEnquiries = async () => {
+        const data = await getEnquiries();
+        setEnquiries(data);
+    };
+
+    const handleDeleteEnquiry = async (id: string) => {
+        if (confirm("Are you sure you want to delete this enquiry?")) {
+            try {
+                await deleteEnquiry(id);
+                fetchEnquiries();
+            } catch (error) {
+                console.error("Failed to delete enquiry", error);
+            }
+        }
     };
 
     // Extract YouTube ID to get thumbnail
@@ -675,6 +695,54 @@ export default function AdminPage() {
                                             </td>
                                             <td className="p-4 text-right">
                                                 <Button variant="ghost" size="icon" onClick={() => handleDeleteClass(cls.id!)}>
+                                                    <Trash2 size={16} className="text-destructive" />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {/* Enquiries Section */}
+                <div className="space-y-6 pt-8 border-t">
+                    <h2 className="text-2xl font-bold font-heading">Direct Enquiries</h2>
+                    <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
+                        <table className="w-full text-left text-sm">
+                            <thead className="bg-muted text-muted-foreground">
+                                <tr>
+                                    <th className="p-4 font-medium">Date</th>
+                                    <th className="p-4 font-medium">Name</th>
+                                    <th className="p-4 font-medium">Email</th>
+                                    <th className="p-4 font-medium">Message</th>
+                                    <th className="p-4 font-medium text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y">
+                                {enquiries.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                                            No enquiries found.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    enquiries.map((enq) => (
+                                        <tr key={enq.id} className="hover:bg-muted/10">
+                                            <td className="p-4 text-xs text-muted-foreground whitespace-nowrap">
+                                                {enq.createdAt?.toDate ? enq.createdAt.toDate().toLocaleDateString() : "Pending"}
+                                            </td>
+                                            <td className="p-4 font-medium">{enq.name}</td>
+                                            <td className="p-4">
+                                                <a href={`mailto:${enq.email}`} className="text-blue-500 hover:underline">
+                                                    {enq.email}
+                                                </a>
+                                            </td>
+                                            <td className="p-4 max-w-xs overflow-hidden">
+                                                <p className="whitespace-pre-wrap">{enq.message}</p>
+                                            </td>
+                                            <td className="p-4 text-right">
+                                                <Button variant="ghost" size="icon" onClick={() => handleDeleteEnquiry(enq.id)}>
                                                     <Trash2 size={16} className="text-destructive" />
                                                 </Button>
                                             </td>

@@ -30,3 +30,11 @@ export interface ClassVideo {
     thumbnailUrl: string;
     createdAt?: any;
 }
+
+export interface Enquiry {
+    id: string;
+    name: string;
+    email: string;
+    message: string;
+    createdAt?: any;
+}
