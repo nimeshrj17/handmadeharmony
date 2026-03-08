@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { SEO_PAGES } from '@/lib/seo-data'
 
-const BASE_URL = 'https://www.handmadeharmony.in'
+const BASE_URL = 'https://www.crochetnookbydharita.co.in'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     // Static Routes

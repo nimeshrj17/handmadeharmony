@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             type: "article",
         },
         alternates: {
-            canonical: `https://www.handmadeharmony.in/${pageData.slug}`,
+            canonical: `https://www.crochetnookbydharita.co.in/${pageData.slug}`,
         },
     };
 }
@@ -60,19 +60,19 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
         "author": {
             "@type": "Organization",
             "name": "Handmade Harmony",
-            "url": "https://www.handmadeharmony.in"
+            "url": "https://www.crochetnookbydharita.co.in"
         },
         "publisher": {
             "@type": "Organization",
             "name": "Handmade Harmony",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.handmadeharmony.in/logo.jpg"
+                "url": "https://www.crochetnookbydharita.co.in/logo.jpg"
             }
         },
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://www.handmadeharmony.in/${pageData.slug}`
+            "@id": `https://www.crochetnookbydharita.co.in/${pageData.slug}`
         },
         ...(isTutorial && {
             "step": [

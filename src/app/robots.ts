@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: ['/admin/'],
         },
-        sitemap: 'https://www.handmadeharmony.in/sitemap.xml',
+        sitemap: 'https://www.crochetnookbydharita.co.in/sitemap.xml',
     }
 }
