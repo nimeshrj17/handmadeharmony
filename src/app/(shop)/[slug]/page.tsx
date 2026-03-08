@@ -49,9 +49,12 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
 
     const relatedPages = getRelatedSeoPages(pageData.slug, pageData.category);
 
+    const isTutorial = ['learning', 'beginner', 'tutorial'].includes(pageData.category);
+
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": isTutorial ? "HowTo" : "Article",
+        "name": pageData.title,
         "headline": pageData.title,
         "description": pageData.description,
         "author": {
@@ -70,7 +73,21 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": `https://www.handmadeharmony.in/${pageData.slug}`
-        }
+        },
+        ...(isTutorial && {
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "name": "Start with a slip knot",
+                    "text": "Everything starts here. Pull the yarn through a small loop to secure your first stitch on the hook."
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "Foundation Chain",
+                    "text": "Create your base row. Try to keep your tension consistent—not too tight, not too loose."
+                }
+            ]
+        })
     };
 
     return (
@@ -122,76 +139,136 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
                 {/* Content Structure */}
                 <div className="prose prose-lg dark:prose-invert max-w-none space-y-12 text-foreground/80">
 
-                    <section id="introduction">
-                        <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. Introduction to {pageData.topic}</h2>
-                        <p>
-                            Welcome to the ultimate guide on <strong>{pageData.topic}</strong>. Whether you are looking to purchase high-quality handmade crochet items or you want to learn how to create your own beautiful pieces, understanding the nuances of {pageData.topic} is the perfect place to start. At Handmade Harmony, we specialize in bringing you the best in crochet craftsmanship and education.
-                        </p>
-                    </section>
+                    {['learning', 'beginner', 'tutorial'].includes(pageData.category) ? (
+                        <>
+                            <section id="basics">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. The Basics of {pageData.topic}</h2>
+                                <p>Welcome to your complete guided path for <strong>{pageData.topic}</strong>. Getting started with crochet doesn't have to be overwhelming. At Handmade Harmony, we believe anyone can master the art of crochet with the right foundation.</p>
+                            </section>
 
-                    <section id="why-popular">
-                        <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">2. Why Crochet {pageData.topic} Is Popular</h2>
-                        <p>
-                            In recent years, the demand for <em>{pageData.topic}</em> has surged, especially in India. This popularity stems from the unique, personal touch that handmade items offer compared to mass-produced goods. Engaging in or purchasing items related to {pageData.topic} supports local artisans and provides a sense of connection to traditional crafts that have been cherished for generations.
-                        </p>
-                    </section>
+                            <section id="tools">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">2. Tools Needed for {pageData.topic}</h2>
+                                <p>Before you dive in, make sure your toolkit is ready. We highly recommend:</p>
+                                <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
+                                    <li><strong>Crochet Hooks:</strong> Start with a comfortable 4.0mm or 5.0mm ergonomic hook.</li>
+                                    <li><strong>Yarn:</strong> Medium weight (worsted) acrylic or cotton blend yarn is easiest for beginners learning {pageData.topic}.</li>
+                                    <li><strong>Accessories:</strong> Stitch markers, a tapestry needle, and small scissors.</li>
+                                </ul>
+                            </section>
 
-                    <section id="materials">
-                        <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. Materials Needed for Crochet</h2>
-                        <p>
-                            To effectively dive into {pageData.topic}, it's essential to have the right materials. For a successful project, you will generally need:
-                        </p>
-                        <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
-                            <li><strong>High-quality Yarn:</strong> Acrylic, cotton, or blended yarns depending on the specific project.</li>
-                            <li><strong>Crochet Hooks:</strong> Various sizes depending on yarn weight.</li>
-                            <li><strong>Stitch Markers:</strong> To keep track of rounds and complex patterns.</li>
-                            <li><strong>Tapestry Needle:</strong> Essential for weaving in ends and sewing pieces together.</li>
-                        </ul>
-                    </section>
+                            {/* Secondary Image */}
+                            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg my-12">
+                                <Image src="/images/hero-krishna.jpg" alt={`Crochet handmade gifts and tutorial tools for ${pageData.topic}`} fill className="object-cover" />
+                            </div>
 
-                    {/* Secondary Image */}
-                    <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg my-12">
-                        <Image
-                            src="/images/hero-krishna.jpg"
-                            alt={`Crochet handmade gifts and tutorial for ${pageData.topic}`}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
+                            <section id="step-by-step">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. Step-by-Step {pageData.topic} Guide</h2>
+                                <p>Follow these steps closely to master {pageData.topic}:</p>
+                                <ol className="list-decimal pl-6 space-y-2 mt-4 text-muted-foreground">
+                                    <li><strong>The Slip Knot:</strong> Everything starts here. Pull the yarn through a small loop to secure your first stitch on the hook.</li>
+                                    <li><strong>Foundation Chain:</strong> Create your base row. Try to keep your tension consistent—not too tight, not too loose.</li>
+                                    <li><strong>First Stitches:</strong> Work a row of single crochets (sc) into your main chain to build the fabric.</li>
+                                </ol>
+                                <p className="mt-4">Need to see it in action? Take our deep-dive <Link href="/learn-crochet-online" className="text-primary hover:underline font-medium">expert-led crochet class</Link>.</p>
+                            </section>
 
-                    <section id="step-by-step">
-                        <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">4. Step-by-Step Crochet Guide</h2>
-                        <p>
-                            Mastering {pageData.topic} requires patience and practice. Here is a high-level overview to get you started:
-                        </p>
-                        <ol className="list-decimal pl-6 space-y-2 mt-4 text-muted-foreground">
-                            <li><strong>Understand the Basics:</strong> Familiarize yourself with fundamental stitches like chain (ch), single crochet (sc), and double crochet (dc).</li>
-                            <li><strong>Read the Pattern Carefully:</strong> Before beginning any project related to {pageData.topic}, read through the entire instructions.</li>
-                            <li><strong>Start Small:</strong> Begin with small, manageable projects before tackling complex designs or large business ventures.</li>
-                            <li><strong>Check Your Gauge:</strong> Ensure your tension matches the pattern's requirements for consistent results.</li>
-                        </ol>
-                        <p className="mt-4">
-                            For a deeper dive tailored specifically for beginners, check out our comprehensive <Link href="/how-to-crochet-for-beginners" className="text-primary hover:underline font-medium">crochet beginner guide</Link>.
-                        </p>
-                    </section>
+                            <section id="beginner-projects">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">4. Beginner Projects</h2>
+                                <p>The best way to solidify your skills in {pageData.topic} is to practice with real projects! We recommend starting with a simple <Link href="/crochet-coaster-patterns" className="text-primary hover:underline">crochet coaster</Link> or easy scarf pattern before attempting complex amigurumi dolls.</p>
+                            </section>
+                        </>
+                    ) : pageData.category === 'gift' ? (
+                        <>
+                            <section id="why-special">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. Why Handmade Crochet Gifts Are Special</h2>
+                                <p>Looking for the perfect gift? Nothing says "I care about you" quite like a handmade crochet piece. Unlike mass-produced items, <strong>{pageData.topic}</strong> carries the warmth, time, and heart of the artisan who made it here in India.</p>
+                            </section>
 
-                    <section id="tips">
-                        <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">5. Crochet Tips for Beginners</h2>
-                        <p>
-                            When exploring {pageData.topic}, keep these essential tips in mind to avoid common pitfalls:
-                        </p>
-                        <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
-                            <li>Take frequent breaks to rest your hands and wrists.</li>
-                            <li>Count your stitches diligently at the end of every row or round.</li>
-                            <li>Don't be afraid to frog (unravel) your work if you make a mistake; it's the best way to learn!</li>
-                            <li>Engage with the community to learn new techniques and gain inspiration.</li>
-                        </ul>
-                    </section>
+                            <section id="popular-ideas">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">2. Popular {pageData.topic} Ideas</h2>
+                                <p>Not sure what to pick? Consider these top-selling options:</p>
+                                <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
+                                    <li><strong>Amigurumi Dolls:</strong> Cute, customizable crochet dolls reflecting the recipient's personality.</li>
+                                    <li><strong>Crochet Keychains:</strong> A small, budget-friendly token of love they can carry everywhere.</li>
+                                    <li><strong>Coasters and Decor:</strong> Practical yet beautiful items that enhance any home aesthetic.</li>
+                                </ul>
+                            </section>
+
+                            {/* Secondary Image */}
+                            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg my-12">
+                                <Image src="/images/hero-krishna.jpg" alt={`Top unique ${pageData.topic} gifts`} fill className="object-cover" />
+                            </div>
+
+                            <section id="occasions">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. {pageData.topic} for Different Occasions</h2>
+                                <p>Handmade crochet gifts are universally loved, whether it's a cozy scarf for a <strong>winter birthday</strong>, a beautiful table runner for a <strong>housewarming party</strong>, or an adorable plushie for a <strong>baby shower</strong>. Browse our <Link href="/products" className="text-primary hover:underline">product catalog</Link> to find exactly what you need.</p>
+                            </section>
+                        </>
+                    ) : pageData.category === 'business' ? (
+                        <>
+                            <section id="how-to-start">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. How to Start Your {pageData.topic}</h2>
+                                <p>Turning a hobby into a business can be daunting, but the market for <strong>{pageData.topic}</strong> in India is rapidly growing. The key is finding your niche—whether that's amigurumi dolls, modern clothing, or aesthetic home decor—and building a strong portfolio of high-quality products.</p>
+                            </section>
+
+                            <section id="pricing">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">2. Pricing Your Crochet Handmade Products</h2>
+                                <p>Pricing is the hardest part. Make sure you calculate the exact cost of your yarn AND pay yourself a fair hourly wage for your labor. A common formula is: `(Cost of Materials + Hourly Labor) x 2.5 = Retail Price`.</p>
+                            </section>
+
+                            {/* Secondary Image */}
+                            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg my-12">
+                                <Image src="/images/hero-krishna.jpg" alt={`How to sell and start a business involving ${pageData.topic}`} fill className="object-cover" />
+                            </div>
+
+                            <section id="selling-online">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. Where to Sell Your Products</h2>
+                                <p>Start by tapping into Instagram and local WhatsApp groups. As you scale, platforms like Etsy India, Amazon Karigar, or your own dedicated e-commerce storefront (just like Handmade Harmony) will help you reach a massive, dedicated audience.</p>
+                            </section>
+                        </>
+                    ) : (
+                        <>
+                            <section id="introduction">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. Introduction to {pageData.topic}</h2>
+                                <p>Welcome to the ultimate guide on <strong>{pageData.topic}</strong>. Whether you are shopping for high-quality handmade crochet items or seeking inspiration for your next project, {pageData.topic} is a wonderful world to explore. At Handmade Harmony, we specialize in authentic, adorable crochet craftsmanship.</p>
+                            </section>
+
+                            <section id="why-popular">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">2. Why {pageData.topic} Is So Popular</h2>
+                                <p>The demand for <em>{pageData.topic}</em> in India has skyrocketed. People are increasingly pivoting toward sustainable, artisan-made products that tell a story—moving away from mass-produced plastics. Buying {pageData.topic} directly supports local creators and artists.</p>
+                            </section>
+
+                            {/* Secondary Image */}
+                            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg my-12">
+                                <Image src="/images/hero-krishna.jpg" alt={`Discover ${pageData.topic} at Handmade Harmony`} fill className="object-cover" />
+                            </div>
+
+                            <section id="exploring">
+                                <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. Exploring {pageData.topic}</h2>
+                                <p>When browsing for {pageData.topic}, look out for tight, clean stitching and high-quality yarn that won't pill or fuzz easily. Our artisan, Dharita, ensures every piece shipped from Handmade Harmony meets rigorous quality checks.</p>
+                                <p className="mt-4">If {pageData.topic} has inspired you to pick up a hook yourself, don't miss our <Link href="/how-to-crochet-for-beginners" className="text-primary hover:underline font-medium">crochet beginner guide</Link>!</p>
+                            </section>
+                        </>
+                    )}
 
                     <section id="related" className="bg-primary/5 p-8 rounded-2xl mt-12 border border-primary/10">
                         <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-6 flex items-center gap-2">
                             <span className="text-4xl">🧶</span> 6. Related Crochet {pageData.category}s
                         </h2>
+
+                        {/* Topic Cluster Pillar Link */}
+                        <div className="mb-6 p-4 bg-background rounded-xl border-l-4 border-primary shadow-sm">
+                            <h3 className="font-heading font-bold text-foreground mb-1">Explore our Main Guide:</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Make sure to check out our comprehensive pillar page on {' '}
+                                {['learning', 'beginner', 'tutorial'].includes(pageData.category) && <Link href="/how-to-crochet-for-beginners" className="text-primary hover:underline font-medium">How to Crochet for Beginners</Link>}
+                                {pageData.category === 'pattern' && <Link href="/crochet-patterns" className="text-primary hover:underline font-medium">Crochet Patterns</Link>}
+                                {pageData.category === 'business' && <Link href="/how-to-start-crochet-business" className="text-primary hover:underline font-medium">How to Start a Crochet Business</Link>}
+                                {pageData.category === 'gift' && <Link href="/crochet-gift-ideas" className="text-primary hover:underline font-medium">Crochet Gift Ideas</Link>}
+                                {['product', 'decor', 'clothing', 'long-tail', 'local'].includes(pageData.category) && <Link href="/crochet-handmade-products" className="text-primary hover:underline font-medium">Handmade Crochet Products</Link>}
+                            </p>
+                        </div>
+
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {relatedPages.map(related => (
                                 <Link

@@ -11,9 +11,42 @@ export interface SeoPageData {
 
 const BRAND_NAME = "Handmade Harmony";
 
-const generateTitle = (topic: string) => `${topic.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} | Crochet Handmade Harmony India`;
-const generateDescription = (topic: string) => `Looking for ${topic}? Discover beautiful handmade crochet products, step-by-step tutorials, beginner patterns, and gifts at Handmade Harmony India.`;
-const generateH1 = (topic: string) => `${topic.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`;
+const capitalize = (str: string) => str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+const generateTitle = (topic: string, category: SeoCategory) => {
+    const capTopic = capitalize(topic);
+    switch (category) {
+        case 'gift': return `25+ Unique ${capTopic} ideas | Perfect for Any Occasion`;
+        case 'learning':
+        case 'beginner': return `${capTopic} | Step-by-Step Guide for Beginners`;
+        case 'pattern': return `${capTopic} | Easy & Beautiful Patterns to Try`;
+        case 'business': return `How to Start: ${capTopic} in India | Pro Guide`;
+        default: return `${capTopic} | Best Handmade Crochet in India`;
+    }
+};
+
+const generateDescription = (topic: string, category: SeoCategory) => {
+    switch (category) {
+        case 'gift': return `Discover the best unique handmade crochet gifts for your loved ones. Explore our collection of beautiful, high-quality ${topic} made in India.`;
+        case 'learning':
+        case 'beginner': return `Want to learn ${topic}? Read our comprehensive guide including tools needed, materials, and a step-by-step tutorial with images. Start your crochet journey today!`;
+        case 'pattern': return `Looking for ${topic}? Browse our curated list of easy, intermediate, and advanced crochet patterns. Create beautiful handmade items yourself!`;
+        case 'business': return `Thinking about a crochet business? Learn everything about ${topic}, from pricing and selling online to creating high-demand products in India.`;
+        default: return `Looking for ${topic}? Discover beautiful handmade crochet products, home decor, and fashion accessories at Handmade Harmony India. Shop our unique collection!`;
+    }
+};
+
+const generateH1 = (topic: string, category: SeoCategory) => {
+    const capTopic = capitalize(topic);
+    switch (category) {
+        case 'gift': return `Unique ${capTopic}`;
+        case 'learning':
+        case 'beginner': return `${capTopic}: The Ultimate Guide`;
+        case 'pattern': return `${capTopic} Collection`;
+        case 'business': return `The Complete Guide to ${capTopic}`;
+        default: return `${capTopic} in India`;
+    }
+};
 
 // 100 SEO Keywords for Crochet Business (India)
 export const SEO_PAGES_RAW: { topic: string, category: SeoCategory }[] = [
@@ -149,13 +182,15 @@ export const SEO_PAGES: SeoPageData[] = SEO_PAGES_RAW.map(item => {
     }
     seenSlugs.add(slug);
 
+    const category = item.category as SeoCategory;
+
     return {
         slug,
         topic: item.topic,
-        category: item.category as SeoCategory,
-        title: generateTitle(item.topic),
-        description: generateDescription(item.topic),
-        h1: generateH1(item.topic),
+        category,
+        title: generateTitle(item.topic, category),
+        description: generateDescription(item.topic, category),
+        h1: generateH1(item.topic, category),
     };
 });
 
