@@ -2,7 +2,7 @@
 
 import { getProductBySlug } from "@/lib/db";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, ArrowLeft, Check, Star } from "lucide-react";
+import { MessageCircle, ArrowLeft, Check, Star, Sparkles, Info } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -123,6 +123,16 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                             <p>
                                 Every piece is handmade with love and care. Due to the nature of handmade items, slight variations may occur, making your item truly unique.
                             </p>
+                            <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/10">
+                                <h4 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
+                                    <Sparkles size={16} className="text-primary" />
+                                    Material & Care
+                                </h4>
+                                <ul className="text-sm space-y-1 list-none p-0 m-0">
+                                    <li><span className="font-semibold">Material:</span> 100% cotton</li>
+                                    <li><span className="font-semibold">Cleaning Guide:</span> “Treat it gently—hand wash and let it rest flat to dry 💙</li>
+                                </ul>
+                            </div>
                         </div>
 
                         {product.availableColors.length > 0 && (
@@ -151,6 +161,12 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                             <p className="text-xs text-muted-foreground mt-4 text-center md:text-left">
                                 Secure checkout via WhatsApp. We will confirm details and payment.
                             </p>
+                            <div className="mt-6 p-4 bg-muted/30 rounded-xl text-[10px] leading-relaxed text-muted-foreground">
+                                <p className="font-bold mb-1 uppercase tracking-wider">Product Colours & Care</p>
+                                <p>
+                                    Our yarns are sourced from reliable suppliers. Slight variations in shades may occur due to different dye lots or monitor settings. Refunds or exchanges cannot be made for minor color differences. Darker shades of yarn may occasionally bleed.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

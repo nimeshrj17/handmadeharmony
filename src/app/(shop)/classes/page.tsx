@@ -332,6 +332,13 @@ export default function ClassesPage() {
                         </div>
                     </motion.div>
                 </section>
+
+                {/* Disclaimer */}
+                <section className="text-center pb-20">
+                    <p className="text-sm text-muted-foreground italic bg-muted/30 py-4 px-6 rounded-full inline-block border">
+                        “Workshop fees are non-refundable; kits include standard materials.”
+                    </p>
+                </section>
             </div>
         </div>
     );

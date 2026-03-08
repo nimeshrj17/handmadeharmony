@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Product } from "@/lib/types";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, FileText } from "lucide-react";
+import { MessageCircle, FileText, Sparkles } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { siteConfig } from "@/lib/config";
 
@@ -96,7 +96,20 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                         </p>
                                     </div>
                                 )}
+                                <div className="space-y-4 pt-4 border-t">
+                                    <div className="bg-primary/5 p-3 rounded-xl border border-primary/10">
+                                        <h4 className="text-xs font-bold text-foreground mb-1 flex items-center gap-1">
+                                            <Sparkles size={14} className="text-primary" />
+                                            Material & Care
+                                        </h4>
+                                        <ul className="text-[11px] space-y-0.5 list-none p-0 m-0 text-muted-foreground">
+                                            <li><span className="font-semibold text-foreground">Material:</span> 100% cotton</li>
+                                            <li><span className="font-semibold text-foreground">Cleaning Guide:</span> “Treat it gently—hand wash and let it rest flat to dry 💙</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
+
                         </ScrollArea>
 
                         <div className="p-6 pt-2 mt-auto border-t bg-muted/10">
@@ -115,6 +128,12 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                     </a>
                                 </Button>
                             )}
+                            <div className="mt-4 p-3 bg-muted/30 rounded-lg text-[10px] leading-relaxed text-muted-foreground">
+                                <p className="font-bold mb-1 uppercase tracking-wider">Note on Colours</p>
+                                <p>
+                                    Slight variations in shades may occur due to dye lots or monitor settings. Darker shades may occasionally bleed.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

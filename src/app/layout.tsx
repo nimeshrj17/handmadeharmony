@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   title: "Handmade Harmony",
   description: "Smile stitched. Joy delivered.",
   icons: {
-    icon: "/favicon.jpg",
-    apple: "/logo.jpg",
+    icon: "/logo.jpg?v=1",
+    apple: "/logo.jpg?v=1",
   },
 };
 
