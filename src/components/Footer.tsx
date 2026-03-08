@@ -13,7 +13,7 @@ const Footer = () => {
     return (
         <footer className="bg-muted/30 border-t py-12">
             <div className="container mx-auto px-4 md:px-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Brand */}
                     <div className="space-y-4">
                         <h3 className="font-heading text-xl font-bold text-primary">Handmade Harmony</h3>
@@ -32,6 +32,18 @@ const Footer = () => {
                             <li><Link href="/return-policy" className="hover:text-primary transition-colors">Return Policy</Link></li>
                             <li><Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
                             <li><Link href="/admin" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-xs text-muted-foreground/50">Admin Login</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Popular SEO Guides */}
+                    <div className="space-y-4">
+                        <h4 className="font-bold text-foreground">Explore</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                            <li><Link href="/how-to-crochet-for-beginners" className="hover:text-primary transition-colors">Crochet for Beginners</Link></li>
+                            <li><Link href="/crochet-handmade-products" className="hover:text-primary transition-colors">Handmade Products</Link></li>
+                            <li><Link href="/crochet-flower-patterns" className="hover:text-primary transition-colors">Flower Patterns</Link></li>
+                            <li><Link href="/how-to-start-crochet-business" className="hover:text-primary transition-colors">Start a Business</Link></li>
+                            <li><Link href="/crochet-gifts" className="hover:text-primary transition-colors">Gift Ideas</Link></li>
                         </ul>
                     </div>
 
