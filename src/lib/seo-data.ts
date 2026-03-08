@@ -1,4 +1,4 @@
-export type SeoCategory = 'product' | 'gift' | 'clothing' | 'decor' | 'learning' | 'beginner' | 'business' | 'pattern' | 'long-tail' | 'local';
+export type SeoCategory = 'product' | 'gift' | 'clothing' | 'decor' | 'learning' | 'beginner' | 'business' | 'pattern' | 'long-tail' | 'local' | 'materials';
 
 export interface SeoPageData {
     slug: string;
@@ -21,6 +21,7 @@ const generateTitle = (topic: string, category: SeoCategory) => {
         case 'beginner': return `${capTopic} | Step-by-Step Guide for Beginners`;
         case 'pattern': return `${capTopic} | Easy & Beautiful Patterns to Try`;
         case 'business': return `How to Start: ${capTopic} in India | Pro Guide`;
+        case 'materials': return `Best ${capTopic} in India | Buying Guide`;
         default: return `${capTopic} | Best Handmade Crochet in India`;
     }
 };
@@ -32,6 +33,7 @@ const generateDescription = (topic: string, category: SeoCategory) => {
         case 'beginner': return `Want to learn ${topic}? Read our comprehensive guide including tools needed, materials, and a step-by-step tutorial with images. Start your crochet journey today!`;
         case 'pattern': return `Looking for ${topic}? Browse our curated list of easy, intermediate, and advanced crochet patterns. Create beautiful handmade items yourself!`;
         case 'business': return `Thinking about a crochet business? Learn everything about ${topic}, from pricing and selling online to creating high-demand products in India.`;
+        case 'materials': return `Looking for ${topic}? Read our complete guide on exactly what supplies to buy, how to choose the right materials, and the best places to get them in India.`;
         default: return `Looking for ${topic}? Discover beautiful handmade crochet products, home decor, and fashion accessories at Handmade Harmony India. Shop our unique collection!`;
     }
 };
@@ -44,6 +46,7 @@ const generateH1 = (topic: string, category: SeoCategory) => {
         case 'beginner': return `${capTopic}: The Ultimate Guide`;
         case 'pattern': return `${capTopic} Collection`;
         case 'business': return `The Complete Guide to ${capTopic}`;
+        case 'materials': return `Ultimate Guide to ${capTopic}`;
         default: return `${capTopic} in India`;
     }
 };
@@ -168,7 +171,29 @@ export const SEO_PAGES_RAW: { topic: string, category: SeoCategory }[] = [
     { topic: "crochet handicrafts india", category: "local" },
     { topic: "crochet artisans india", category: "local" },
     { topic: "crochet products made by indian artisans", category: "local" },
-    { topic: "crochet handmade brand india", category: "local" }
+    { topic: "crochet handmade brand india", category: "local" },
+
+    // 11. "Krosha" Variant Keywords (High Volume Competitor Data)
+    { topic: "krosha patterns", category: "pattern" },
+    { topic: "krosha design patterns", category: "pattern" },
+    { topic: "krosha work", category: "learning" },
+    { topic: "handmade krosha", category: "product" },
+    { topic: "krosha accessories", category: "product" },
+    { topic: "krosha tutorial", category: "learning" },
+    { topic: "how to do krosha", category: "learning" },
+    { topic: "krosha stitches", category: "beginner" },
+
+    // 12. Materials & Yarn Keywords (Competitor Data)
+    { topic: "cotton yarn for crochet", category: "materials" },
+    { topic: "crochet yarns and threads", category: "materials" },
+    { topic: "t shirt yarn crochet", category: "materials" },
+    { topic: "macrame cotton string", category: "materials" },
+    { topic: "acrylic worsted weight yarn", category: "materials" },
+    { topic: "crochet yarn sizes", category: "materials" },
+    { topic: "buy crochet yarn online india", category: "materials" },
+    { topic: "best yarn for amigurumi", category: "materials" },
+    { topic: "crochet hooks and accessories", category: "materials" },
+    { topic: "where to buy crochet supplies", category: "materials" }
 ];
 
 // Ensure unique slugs
