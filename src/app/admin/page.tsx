@@ -428,9 +428,10 @@ export default function AdminPage() {
                                                     multiple
                                                     className="flex-1 bg-transparent py-2 text-sm outline-none"
                                                     onChange={(e) => {
-                                                        if (e.target.files) {
-                                                            setImageFiles(prev => [...prev, ...Array.from(e.target.files!)]);
-                                                            e.target.value = ''; // Reset input so same file can be selected again
+                                                        if (e.target.files && e.target.files.length > 0) {
+                                                            const filesArray = Array.from(e.target.files);
+                                                            console.log("Files selected:", filesArray);
+                                                            setImageFiles(prev => [...prev, ...filesArray]);
                                                         }
                                                     }}
                                                 />
