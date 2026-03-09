@@ -39,6 +39,8 @@ export default function AdminPage() {
         isFeatured: false,
         hasFreePattern: false,
         freePatternDetails: "",
+        material: "100% Cotton",
+        careGuide: "Treat it gently—hand wash and let it rest flat to dry 💙",
         availableColors: []
     });
     const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -227,6 +229,8 @@ export default function AdminPage() {
                     inStock: newProduct.inStock || true,
                     hasFreePattern: newProduct.hasFreePattern || false,
                     freePatternDetails: newProduct.freePatternDetails || "",
+                    material: newProduct.material || "100% Cotton",
+                    careGuide: newProduct.careGuide || "Treat it gently—hand wash and let it rest flat to dry 💙",
                     images: newProduct.images || []
                 }, imageFiles);
             }
@@ -263,6 +267,8 @@ export default function AdminPage() {
             isFeatured: false,
             hasFreePattern: false,
             freePatternDetails: "",
+            material: "100% Cotton",
+            careGuide: "Treat it gently—hand wash and let it rest flat to dry 💙",
             availableColors: []
         });
         setImageFiles([]);
@@ -474,7 +480,20 @@ export default function AdminPage() {
                                         placeholder="Description"
                                         value={newProduct.description}
                                         onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                                        className="min-h-[100px]"
                                     />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <Input
+                                            placeholder="Material (e.g., 100% Cotton)"
+                                            value={newProduct.material}
+                                            onChange={(e) => setNewProduct({ ...newProduct, material: e.target.value })}
+                                        />
+                                        <Input
+                                            placeholder="Care Guide"
+                                            value={newProduct.careGuide}
+                                            onChange={(e) => setNewProduct({ ...newProduct, careGuide: e.target.value })}
+                                        />
+                                    </div>
 
                                     {/* Free Pattern Section */}
                                     <div className="space-y-4 border p-4 rounded-md bg-muted/20">

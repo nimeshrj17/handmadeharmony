@@ -103,8 +103,8 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                             Material & Care
                                         </h4>
                                         <ul className="text-[11px] space-y-0.5 list-none p-0 m-0 text-muted-foreground">
-                                            <li><span className="font-semibold text-foreground">Material:</span> 100% cotton</li>
-                                            <li><span className="font-semibold text-foreground">Cleaning Guide:</span> “Treat it gently—hand wash and let it rest flat to dry 💙</li>
+                                            <li><span className="font-semibold text-foreground">Material:</span> {product.material || "100% cotton"}</li>
+                                            <li><span className="font-semibold text-foreground">Cleaning Guide:</span> {product.careGuide || "“Treat it gently—hand wash and let it rest flat to dry 💙”"}</li>
                                         </ul>
                                     </div>
                                 </div>

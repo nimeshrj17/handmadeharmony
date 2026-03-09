@@ -11,6 +11,8 @@ export interface Product {
     inStock: boolean;
     hasFreePattern?: boolean;
     freePatternDetails?: string;
+    material?: string;
+    careGuide?: string;
     createdAt?: any; // Firebase Timestamp
 }
 

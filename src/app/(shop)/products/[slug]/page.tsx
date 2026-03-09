@@ -129,8 +129,8 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                     Material & Care
                                 </h4>
                                 <ul className="text-sm space-y-1 list-none p-0 m-0">
-                                    <li><span className="font-semibold">Material:</span> 100% cotton</li>
-                                    <li><span className="font-semibold">Cleaning Guide:</span> “Treat it gently—hand wash and let it rest flat to dry 💙</li>
+                                    <li><span className="font-semibold">Material:</span> {product.material || "100% cotton"}</li>
+                                    <li><span className="font-semibold">Cleaning Guide:</span> {product.careGuide || "“Treat it gently—hand wash and let it rest flat to dry 💙”"}</li>
                                 </ul>
                             </div>
                         </div>
