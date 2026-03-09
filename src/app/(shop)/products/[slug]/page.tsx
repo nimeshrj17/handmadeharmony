@@ -106,7 +106,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                         <Check size={12} className="mr-1" /> In Stock
                                     </Badge>
                                 ) : (
-                                    <Badge variant="destructive">Out of Stock</Badge>
+                                    <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">Place Order</Badge>
                                 )}
                             </div>
                             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">

@@ -37,11 +37,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
                         )}
                         {!product.inStock && (
                             <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
-                                <div className="bg-destructive text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm">
-                                    Out of Stock
-                                </div>
-                                <div className="bg-black/60 text-white text-[8px] px-2 py-1 rounded-full font-medium shadow-sm backdrop-blur-sm text-center">
-                                    Contact to get it back in stock
+                                <div className="bg-amber-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm">
+                                    Place Order
                                 </div>
                             </div>
                         )}
