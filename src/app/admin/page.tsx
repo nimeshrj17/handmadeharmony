@@ -110,9 +110,11 @@ export default function AdminPage() {
 
     // Extract YouTube ID to get thumbnail
     const getYouTubeThumbnail = (url: string) => {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
         if (match && match[2].length === 11) {
+            // maxresdefault is 16:9 (can have black bars for shorts).
+            // However, this works universally.
             return `https://img.youtube.com/vi/${match[2]}/maxresdefault.jpg`;
         }
         return "";

@@ -272,40 +272,45 @@ export default function ClassesPage() {
                             viewport={{ once: true }}
                             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                         >
-                            {classes.map((cls, index) => (
-                                <motion.a
-                                    href={cls.youtubeUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    key={cls.id}
-                                    variants={itemVariants}
-                                    className="group block bg-card rounded-2xl overflow-hidden border shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300 transform hover:-translate-y-1"
-                                >
-                                    {/* Thumbnail Container */}
-                                    <div className="relative aspect-video w-full overflow-hidden bg-muted">
-                                        <img
-                                            src={cls.thumbnailUrl}
-                                            alt={cls.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                        {/* Play Button Overlay */}
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                                            <PlayCircle className="text-white w-16 h-16 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-md" />
+                            {classes.map((cls, index) => {
+                                const isShort = cls.youtubeUrl.includes('/shorts/');
+                                return (
+                                    <motion.a
+                                        href={cls.youtubeUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        key={cls.id}
+                                        variants={itemVariants}
+                                        className="group flex flex-col bg-card rounded-2xl overflow-hidden border shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300 transform hover:-translate-y-1 h-full"
+                                    >
+                                        {/* Thumbnail Container */}
+                                        <div className={`relative w-full overflow-hidden bg-muted flex-shrink-0 ${isShort ? 'aspect-[9/16]' : 'aspect-video'}`}>
+                                            <img
+                                                src={cls.thumbnailUrl}
+                                                alt={cls.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                            {/* Play Button Overlay */}
+                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                                                <PlayCircle className="text-white w-16 h-16 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-md" />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {/* Video Info */}
-                                    <div className="p-5">
-                                        <h3 className="font-bold font-heading text-lg group-hover:text-primary transition-colors line-clamp-2">
-                                            {cls.title}
-                                        </h3>
-                                        <p className="text-sm text-muted-foreground mt-2 flex items-center gap-1">
-                                            <span className="inline-block w-2 h-2 rounded-full bg-red-500"></span>
-                                            Watch on YouTube
-                                        </p>
-                                    </div>
-                                </motion.a>
-                            ))}
+                                        {/* Video Info */}
+                                        <div className="p-5 flex flex-col flex-1">
+                                            <h3 className="font-bold font-heading text-lg group-hover:text-primary transition-colors line-clamp-2">
+                                                {cls.title}
+                                            </h3>
+                                            <div className="mt-auto pt-2">
+                                                <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                                    <span className="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+                                                    Watch on YouTube
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </motion.a>
+                                )
+                            })}
                         </motion.div>
                     )}
                 </section>
