@@ -75,7 +75,7 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                             <p className="text-sm text-muted-foreground font-medium">{product.category}</p>
                         </DialogHeader>
 
-                        <ScrollArea className="flex-1 px-6">
+                        <div className="flex-1 px-6 overflow-y-auto min-h-0 py-2 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent">
                             <div className="space-y-6 pb-6">
                                 <div className="space-y-2">
                                     <h4 className="font-semibold text-foreground">Description</h4>
@@ -110,7 +110,7 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                 </div>
                             </div>
 
-                        </ScrollArea>
+                        </div>
 
                         <div className="p-6 pt-2 mt-auto border-t bg-muted/10">
                             {product.inStock ? (
