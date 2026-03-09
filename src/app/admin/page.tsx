@@ -196,9 +196,11 @@ export default function AdminPage() {
 
     const handleSaveProduct = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log("Submit button clicked! Starting handleSaveProduct...");
         setLoading(true);
         try {
             if (!newProduct.name || !newProduct.price) {
+                console.warn("Validation failed: Name and Price are required");
                 alert("Name and Price are required");
                 setLoading(false);
                 return;
