@@ -25,8 +25,8 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[800px] p-0 overflow-hidden bg-background">
-                <div className="grid md:grid-cols-2 h-[80vh] md:h-[500px]">
+            <DialogContent className="sm:max-w-[800px] p-0 overflow-hidden bg-background max-h-[90vh] flex flex-col">
+                <div className="grid md:grid-cols-2 flex-1 overflow-y-auto min-h-0">
                     {/* Image Section - Banner Style */}
                     <div className="relative h-64 md:h-full w-full bg-muted flex flex-col">
                         <div className="relative flex-1 w-full bg-muted">
