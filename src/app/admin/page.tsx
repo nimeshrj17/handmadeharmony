@@ -234,11 +234,11 @@ export default function AdminPage() {
             await fetchProducts();
             cancelEdit();
         } catch (error: any) {
-            console.error(error);
+            console.error("Save product error:", error);
             if (error.code === 'permission-denied') {
-                alert("Permission denied.");
+                alert("Permission denied. Check Firestore/Storage rules.");
             } else {
-                alert("Failed to save product");
+                alert(`Failed to save product: ${error.message || 'Unknown error'}`);
             }
         }
         setLoading(false);
