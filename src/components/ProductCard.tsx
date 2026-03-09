@@ -37,8 +37,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
                         )}
                         {!product.inStock && (
                             <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
-                                <div className="bg-amber-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm">
-                                    Place Order
+                                <div className="bg-amber-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm text-center">
+                                    Place to order<br />to get it made
                                 </div>
                             </div>
                         )}
