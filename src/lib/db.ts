@@ -33,12 +33,17 @@ export const getProducts = async (): Promise<Product[]> => {
 
 export const uploadImage = async (imageFile: File): Promise<string> => {
     try {
+        if (!storage) {
+            alert("Firebase Storage is not initialized. Please check your environment variables.");
+            throw new Error("Storage not initialized");
+        }
         const uniqueId = Math.random().toString(36).substring(7);
         const storageRef = ref(storage, `products/${Date.now()}_${uniqueId}_${imageFile.name}`);
         const snapshot = await uploadBytes(storageRef, imageFile);
         return await getDownloadURL(snapshot.ref);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error uploading image: ", error);
+        alert(`Storage Upload Failed: ${error.message || 'Unknown Error'}`);
         throw error;
     }
 }
