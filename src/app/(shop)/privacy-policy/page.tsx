@@ -24,6 +24,9 @@ export default function PrivacyPolicyPage() {
                             <p>
                                 Your data will never be sold, and we take care to keep it secure. Please note, this policy may be updated from time to time, so we encourage you to check back for the latest version.
                             </p>
+                            <p className="mt-4 font-medium">
+                                To showcase our amigurumi and crochet products, we sometimes use images featuring people or models. Please note that these model images are AI-generated and are used solely for presentation purposes. They are not real individuals. This ensures that no personal likeness or identity is used without consent, while still allowing us to present our handmade creations in an appealing and professional way.
+                            </p>
                         </section>
 
                         <section>

@@ -46,7 +46,10 @@ export default function ReturnPolicyPage() {
                         <section className="bg-muted/30 p-6 rounded-2xl border text-sm">
                             <h2 className="text-lg font-bold text-foreground mt-0">Product Colours</h2>
                             <p>
-                                Our yarns are sourced from reliable suppliers, not manufactured by us. Please note that slight variations in shades may occur due to different dye lots or monitor settings. Refunds or exchanges cannot be made for minor color differences. To maintain consistency, we recommend purchasing enough yarn for your entire project at once. Darker shades of yarn may occasionally bleed.
+                                Our yarns are sourced from trusted suppliers and not manufactured by us. Please note that slight variations in shades may occur due to different dye lots or individual monitor settings. Additionally, images of toys and products displayed on our website are photographed under enhanced lighting, which may cause the actual colours to appear slightly different in person.
+                            </p>
+                            <p className="mt-2">
+                                Refunds or exchanges cannot be made for minor colour differences.
                             </p>
                         </section>
                     </div>

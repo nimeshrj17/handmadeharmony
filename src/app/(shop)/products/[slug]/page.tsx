@@ -164,7 +164,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                             <div className="mt-6 p-4 bg-muted/30 rounded-xl text-[10px] leading-relaxed text-muted-foreground">
                                 <p className="font-bold mb-1 uppercase tracking-wider">Product Colours & Care</p>
                                 <p>
-                                    Our yarns are sourced from reliable suppliers. Slight variations in shades may occur due to different dye lots or monitor settings. Refunds or exchanges cannot be made for minor color differences. Darker shades of yarn may occasionally bleed.
+                                    Our yarns are sourced from trusted suppliers and not manufactured by us. Please note that slight variations in shades may occur due to different dye lots or individual monitor settings. Additionally, images of toys and products displayed on our website are photographed under enhanced lighting, which may cause the actual colours to appear slightly different in person. Refunds or exchanges cannot be made for minor colour differences.
                                 </p>
                             </div>
                         </div>

@@ -131,7 +131,7 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                             <div className="mt-4 p-3 bg-muted/30 rounded-lg text-[10px] leading-relaxed text-muted-foreground">
                                 <p className="font-bold mb-1 uppercase tracking-wider">Note on Colours</p>
                                 <p>
-                                    Slight variations in shades may occur due to dye lots or monitor settings. Darker shades may occasionally bleed.
+                                    Our yarns are sourced from trusted suppliers and not manufactured by us. Please note that slight variations in shades may occur due to different dye lots or individual monitor settings. Additionally, images of toys and products displayed on our website are photographed under enhanced lighting, which may cause the actual colours to appear slightly different in person. Refunds or exchanges cannot be made for minor colour differences.
                                 </p>
                             </div>
                         </div>
