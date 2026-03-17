@@ -45,6 +45,9 @@ export default function AdminPage() {
     });
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [editingProductId, setEditingProductId] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filterCategory, setFilterCategory] = useState("All");
+    const [sortOption, setSortOption] = useState("default");
 
     // Initial Fetch & Auth Listener
     useEffect(() => {
@@ -337,6 +340,30 @@ export default function AdminPage() {
         );
     }
 
+    const filteredProducts = products.filter((product) => {
+        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = filterCategory === "All" || product.category === filterCategory;
+        return matchesSearch && matchesCategory;
+    }).sort((a, b) => {
+        switch (sortOption) {
+            case "price-asc":
+                return a.price - b.price;
+            case "price-desc":
+                return b.price - a.price;
+            case "name-asc":
+                return a.name.localeCompare(b.name);
+            case "name-desc":
+                return b.name.localeCompare(a.name);
+            default:
+                // Sort by creation date or keep original order
+                // If createdAt exists, sort newest first
+                if (b.createdAt && a.createdAt) {
+                     return b.createdAt.toMillis?.() - a.createdAt.toMillis?.() || 0;
+                }
+                return 0;
+        }
+    });
+
     return (
         <div className="min-h-screen bg-background p-8">
             <div className="max-w-6xl mx-auto space-y-12">
@@ -385,6 +412,36 @@ export default function AdminPage() {
                                 Logout
                             </Button>
                         </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <Input 
+                            placeholder="Search products by name..." 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="max-w-md"
+                        />
+                        <select
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:w-[200px]"
+                            value={filterCategory}
+                            onChange={(e) => setFilterCategory(e.target.value)}
+                        >
+                            <option value="All">All Categories</option>
+                            {categories.map((cat) => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                        <select
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:w-[200px]"
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value)}
+                        >
+                            <option value="default">Sort by: Default</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                            <option value="name-desc">Name: Z to A</option>
+                        </select>
                     </div>
 
                     {isAdding && (
@@ -560,14 +617,14 @@ export default function AdminPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
-                                {products.length === 0 ? (
+                                {filteredProducts.length === 0 ? (
                                     <tr>
                                         <td colSpan={5} className="p-8 text-center text-muted-foreground">
-                                            No products found. Add one to get started!
+                                            No products found matching your criteria.
                                         </td>
                                     </tr>
                                 ) : (
-                                    products.map((product) => (
+                                    filteredProducts.map((product) => (
                                         <tr key={product.id} className="hover:bg-muted/10">
                                             <td className="p-4 font-medium">{product.name}</td>
                                             <td className="p-4">{product.category}</td>

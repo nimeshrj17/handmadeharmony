@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function ProductsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
+    const [sortOption, setSortOption] = useState("default");
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<string[]>(["All"]);
     const [isLoading, setIsLoading] = useState(true);
@@ -49,8 +50,26 @@ export default function ProductsPage() {
             }
 
             return matchesSearch && matchesCategory;
+        }).sort((a, b) => {
+            switch (sortOption) {
+                case "price-asc":
+                    return a.price - b.price;
+                case "price-desc":
+                    return b.price - a.price;
+                case "name-asc":
+                    return a.name.localeCompare(b.name);
+                case "name-desc":
+                    return b.name.localeCompare(a.name);
+                default:
+                    // Sort by creation date or keep original order
+                    // If createdAt exists, sort newest first
+                    if (b.createdAt && a.createdAt) {
+                        return b.createdAt.toMillis?.() - a.createdAt.toMillis?.() || 0;
+                    }
+                    return 0;
+            }
         });
-    }, [searchQuery, selectedCategory, products]);
+    }, [searchQuery, selectedCategory, sortOption, products]);
 
     return (
         <div className="min-h-screen bg-background py-12 md:py-20">
@@ -83,15 +102,31 @@ export default function ProductsPage() {
                         ))}
                     </div>
 
-                    {/* Search Input */}
-                    <div className="relative w-full md:w-72">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                        <Input
-                            placeholder="Search products..."
-                            className="pl-10 rounded-full bg-white border-muted shadow-sm focus-visible:ring-primary"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
+                    {/* Search and Sort Actions */}
+                    <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                        {/* Search Input */}
+                        <div className="relative w-full sm:w-64 md:w-72 items-center">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                            <Input
+                                placeholder="Search products..."
+                                className="pl-10 h-10 rounded-full bg-white border-muted shadow-sm focus-visible:ring-primary w-full"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                        
+                        {/* Sort Dropdown */}
+                        <select
+                            className="flex h-10 w-full sm:w-48 rounded-full border border-muted bg-white px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value)}
+                        >
+                            <option value="default">Sort by: Default</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                            <option value="name-desc">Name: Z to A</option>
+                        </select>
                     </div>
                 </div>
 
