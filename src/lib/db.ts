@@ -167,17 +167,23 @@ export const getCategories = async (): Promise<string[]> => {
             if (data.name) categories.push(data.name);
         });
 
-        // Initialize if empty
+        // Initialize if empty but avoid duplicates if called concurrently
         if (categories.length === 0) {
             const batch = [];
             for (const cat of DEFAULT_CATEGORIES) {
-                await addDoc(collection(db, CATEGORIES_COLLECTION), { name: cat });
-                categories.push(cat);
+                // Double check if it was added by another call
+                const q = query(collection(db, CATEGORIES_COLLECTION), where("name", "==", cat));
+                const existing = await getDocs(q);
+                if (existing.empty) {
+                    await addDoc(collection(db, CATEGORIES_COLLECTION), { name: cat });
+                    categories.push(cat);
+                }
             }
-            return categories;
+            return [...new Set(categories)]; // Ensure uniqueness
         }
 
-        return categories.sort();
+        // Return unique, sorted categories to avoid UI repetition
+        return [...new Set(categories)].sort();
     } catch (error) {
         console.error("Error getting categories: ", error);
         return DEFAULT_CATEGORIES;
@@ -186,10 +192,17 @@ export const getCategories = async (): Promise<string[]> => {
 
 export const addCategory = async (name: string): Promise<void> => {
     try {
-        // Check for duplicates
-        const q = query(collection(db, CATEGORIES_COLLECTION), where("name", "==", name));
-        const existing = await getDocs(q);
-        if (!existing.empty) return;
+        // Fetch all categories to do a case-insensitive check
+        const querySnapshot = await getDocs(collection(db, CATEGORIES_COLLECTION));
+        let exists = false;
+        querySnapshot.forEach((doc) => {
+             const data = doc.data();
+             if (data.name && data.name.toLowerCase() === name.toLowerCase()) {
+                 exists = true;
+             }
+        });
+
+        if (exists) return; // Prevent duplicate case-variants
 
         await addDoc(collection(db, CATEGORIES_COLLECTION), { name });
     } catch (error) {
@@ -202,9 +215,25 @@ export const deleteCategory = async (name: string): Promise<void> => {
     try {
         const q = query(collection(db, CATEGORIES_COLLECTION), where("name", "==", name));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach(async (d) => {
-            await deleteDoc(doc(db, CATEGORIES_COLLECTION, d.id));
+        
+        // Instead of deleting all matches, we just delete them one by one. Or actually,
+        // if they want to delete all duplicates, we can keep the loop. But wait, if they
+        // try to delete "Free Patterns" because it's duplicated, and we delete ALL of them,
+        // next reload it'll recreate all.
+        // If we only delete one, they have to click 'delete' multiple times for each dup.
+        // Actually, deleting ALL of them means it hits length === 0.
+        // Let's delete ALL of them so they can clean up duplicates, since getCategories 
+        // now deduplicates and doesn't aggressively reseed unless length === 0.
+        // Wait, if length === 0, it seeds default categories.
+        // Deleting all matches of "Free Patterns" won't make length === 0 if other categories exist.
+        // So keeping the foreach delete is fine, as long as getCategories deduplicates!
+        
+        // Actually, it's safer to delete them all to clean up the DB.
+        const deletePromises: Promise<void>[] = [];
+        querySnapshot.forEach((d) => {
+            deletePromises.push(deleteDoc(doc(db, CATEGORIES_COLLECTION, d.id)));
         });
+        await Promise.all(deletePromises);
     } catch (error) {
         console.error("Error deleting category: ", error);
         throw error;

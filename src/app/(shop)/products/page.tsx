@@ -25,7 +25,7 @@ export default function ProductsPage() {
                     getCategories()
                 ]);
                 setProducts(dbProducts || []);
-                setCategories(["All", "Free Patterns", ...dbCategories]);
+                setCategories(["All", ...dbCategories]);
             } catch (error) {
                 console.error("Failed to fetch data", error);
                 setProducts([]);
