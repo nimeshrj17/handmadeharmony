@@ -67,7 +67,7 @@ const Hero = () => {
                                 <Image src="/images/hero-krishna.jpg" alt="Handmade Crochet Krishna Doll" fill className="object-cover" />
                             </div>
                             <div className="relative rounded-xl md:rounded-2xl overflow-hidden h-full w-full hover:scale-[1.02] transition-transform duration-300 shadow-md">
-                                <Image src="/images/hero-red-bird.jpg" alt="Handmade Crochet Red Bird Keychain" fill className="object-cover" />
+                                <Image src="/images/product-captain-america.jpg" alt="Handmade Crochet Captain America Doll" fill className="object-cover" />
                             </div>
                         </div>
                     </motion.div>
