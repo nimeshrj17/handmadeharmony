@@ -49,7 +49,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Discover the Japanese art of Amigurumi and why it's becoming a sensation in Gujarat. Learn how to make cute stuffed toys with our specialized amigurumi classes in Vadodara.",
     date: "March 20, 2026",
     author: "Dharita",
-    image: "https://images.unsplash.com/photo-1601054704854-1a2e79dea4d3?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800",
     keywords: ["amigurumi classes India", "handmade crochet toys", "learn amigurumi Vadodara"],
     content: `
       <p>If you've ever seen a tiny, cute, crocheted animal and wondered how it was made, you've likely encountered <strong>Amigurumi</strong>. This Japanese art forms involves crocheting small stuffed yarn creatures, and it's taking the crafting world by storm, especially right here in Gujarat.</p>
@@ -72,7 +72,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Tired of the digital grind? Explore 5 amazing creative hobbies you can pick up in Vadodara, from crochet and pottery to gardening, to help you destress and find focus.",
     date: "March 15, 2026",
     author: "Dharita",
-    image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1610412353787-21a4ae082855?auto=format&fit=crop&q=80&w=800",
     keywords: ["creative hobbies Vadodara", "weekend workshops Vadodara", "hobby classes near me"],
     content: `
       <p>Living in a bustling city like Vadodara means we're often caught in the 'always-on' culture. Between work, social media, and daily chores, our creative minds often take a backseat. Here are 5 hobbies you can learn in Vadodara to help you reclaim your calm.</p>
