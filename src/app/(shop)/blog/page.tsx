@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import BlogImage from '@/components/blog/BlogImage';
 import { blogPosts } from '@/lib/blog-data';
 import { Metadata } from 'next';
 
@@ -21,16 +22,10 @@ const BlogPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {blogPosts.map((post) => (
           <article key={post.slug} className="bg-white rounded-3xl overflow-hidden border shadow-sm hover:shadow-xl transition-all group">
-            <div className="aspect-video relative overflow-hidden">
-              <img 
-                src={post.image || "/images/placeholder-blog.jpg"} 
-                alt={post.title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800";
-                }}
-              />
-            </div>
+            <BlogImage 
+              src={post.image} 
+              alt={post.title} 
+            />
             <div className="p-6 space-y-4">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{post.date}</span>

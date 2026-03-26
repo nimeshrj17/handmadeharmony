@@ -2,6 +2,7 @@ import React from 'react';
 import { blogPosts } from '@/lib/blog-data';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import BlogImage from '@/components/blog/BlogImage';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -59,16 +60,12 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
             <span>•</span>
             <span>{post.date}</span>
           </div>
-          <div className="aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl">
-            <img 
-              src={post.image || "/images/placeholder-blog.jpg"} 
-              alt={post.title} 
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800";
-              }}
-            />
-          </div>
+          <BlogImage 
+            src={post.image} 
+            alt={post.title} 
+            aspectRatio="wide"
+            className="rounded-3xl shadow-2xl"
+          />
         </header>
 
         <div 
