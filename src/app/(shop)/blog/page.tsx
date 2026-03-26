@@ -23,9 +23,12 @@ const BlogPage = () => {
           <article key={post.slug} className="bg-white rounded-3xl overflow-hidden border shadow-sm hover:shadow-xl transition-all group">
             <div className="aspect-video relative overflow-hidden">
               <img 
-                src={post.image} 
+                src={post.image || "/images/placeholder-blog.jpg"} 
                 alt={post.title} 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800";
+                }}
               />
             </div>
             <div className="p-6 space-y-4">

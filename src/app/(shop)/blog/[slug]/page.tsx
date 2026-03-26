@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static params for better SEO and performance
@@ -18,7 +18,8 @@ export async function generateStaticParams() {
 
 // Dynamic metadata for each blog post
 export async function generateMetadata({ params }: BlogPostPageProps) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return {};
 
   return {
@@ -34,8 +35,9 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   };
 }
 
-const BlogPostPage = ({ params }: BlogPostPageProps) => {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+const BlogPostPage = async ({ params }: BlogPostPageProps) => {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
@@ -59,9 +61,12 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
           </div>
           <div className="aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl">
             <img 
-              src={post.image} 
+              src={post.image || "/images/placeholder-blog.jpg"} 
               alt={post.title} 
               className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800";
+              }}
             />
           </div>
         </header>
