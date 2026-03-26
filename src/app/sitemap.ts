@@ -1,32 +1,21 @@
-import { MetadataRoute } from 'next'
-import { SEO_PAGES } from '@/lib/seo-data'
-
-const BASE_URL = 'https://www.crochetnookbydharita.co.in'
+import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    // Static Routes
-    const staticRoutes = [
-        '',
-        '/products',
-        '/classes',
-        '/contact',
-        '/privacy-policy',
-        '/return-policy',
-        '/terms',
-    ].map((route) => ({
-        url: `${BASE_URL}${route}`,
-        lastModified: new Date().toISOString(),
-        changeFrequency: 'daily' as const,
-        priority: route === '' ? 1 : 0.8,
-    }))
+  const baseUrl = 'https://crochetnookbydharita.co.in';
 
-    // Programmatic SEO Routes
-    const seoRoutes = SEO_PAGES.map((page) => ({
-        url: `${BASE_URL}/${page.slug}`,
-        lastModified: new Date().toISOString(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.6,
-    }))
+  // We should ideally fetch products/slugs from DB, but for now we list core routes
+  const routes = [
+    '',
+    '/classes',
+    '/products',
+    '/contact',
+    '/about',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: route === '' ? 1 : 0.8,
+  }));
 
-    return [...staticRoutes, ...seoRoutes]
+  return [...routes];
 }

@@ -59,8 +59,8 @@ export default function ClassesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-4xl md:text-6xl font-heading font-bold mb-6 text-foreground leading-[1.1]"
                     >
-                        Crochet & Amigurumi <br />
-                        <span className="text-primary italic">Classes for Beginners</span>
+                        Beginner-Friendly <br />
+                        <span className="text-primary italic">Crochet Classes in Vadodara</span>
                     </motion.h1>
 
                     <motion.p
@@ -99,17 +99,17 @@ export default function ClassesPage() {
                             className="space-y-6"
                         >
                             <h2 className="text-3xl font-heading font-bold text-foreground">
-                                Discover the Joy of <span className="text-primary underline decoration-primary/30 underline-offset-8">Handmade Art</span>
+                                Discover the Joy of <span className="text-primary underline decoration-primary/30 underline-offset-8">Handmade Art in Vadodara</span>
                             </h2>
                             <div className="space-y-4 text-muted-foreground leading-relaxed">
                                 <p>
-                                    Our crochet and amigurumi classes are designed for anyone who wants to learn how to create handmade toys, keychains, and creative yarn projects step-by-step.
+                                    Our crochet and amigurumi classes in Vadodara are designed for anyone who wants to learn how to create handmade toys, keychains, and creative yarn projects step-by-step.
                                 </p>
                                 <p>
-                                    Crochet is a relaxing and creative craft that allows you to transform simple yarn into beautiful handmade items. One of the most loved styles of crochet is **amigurumi**, a Japanese art of crocheting small stuffed toys and cute characters.
+                                    Whether you're looking for a new hobby near you or want to master the Japanese art of **amigurumi**, our workshops provide the perfect creative escape. Crochet is a relaxing and creative craft that allows you to transform simple yarn into beautiful, lasting memories.
                                 </p>
                                 <p>
-                                    Through our structured crochet workshops, students learn essential techniques, practice stitches, and complete small projects that build confidence and creativity.
+                                    Through our structured crochet workshops in Gujarat, students learn essential techniques, practice basic and advanced stitches, and complete small projects that build confidence.
                                 </p>
                             </div>
                         </motion.div>
@@ -313,6 +313,30 @@ export default function ClassesPage() {
                             })}
                         </motion.div>
                     )}
+                </section>
+
+                {/* FAQ Section */}
+                <section className="bg-muted/20 p-8 md:p-16 rounded-[3rem] border">
+                    <div className="max-w-3xl mx-auto space-y-10">
+                        <div className="text-center space-y-4">
+                            <h2 className="text-3xl md:text-4xl font-heading font-bold italic">Frequently Asked <span className="text-primary">Questions</span></h2>
+                            <p className="text-muted-foreground">Everything you need to know about our crochet classes in Vadodara.</p>
+                        </div>
+                        <div className="space-y-6">
+                            {[
+                                { q: "Do I need any experience to join?", a: "No! Our classes are specifically designed for absolute beginners. We start from the very basics of holding a hook and making your first stitch." },
+                                { q: "Where are the classes located in Vadodara?", a: "We conduct workshops in various creative spaces in Vadodara, Gujarat. For the latest batch locations, please contact us directly." },
+                                { q: "Are materials provided?", a: "Yes, for most of our beginner workshops, we provide a complete crochet kit including yarn, hooks, and patterns." },
+                                { q: "Can kids join these classes?", a: "Absolutely! Crochet is a wonderful way for kids to develop concentration and fine motor skills. We suggest ages 8+ for best results." },
+                                { q: "What is the duration of the course?", a: "Our basic workshops range from single-day sessions to 4-week certificate courses depending on the project." }
+                            ].map((faq, i) => (
+                                <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border space-y-2">
+                                    <h4 className="font-bold text-lg text-primary">{faq.q}</h4>
+                                    <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </section>
 
                 {/* Final CTA */}
