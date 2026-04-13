@@ -13,6 +13,8 @@ export interface Product {
     freePatternDetails?: string;
     material?: string;
     careGuide?: string;
+    isDiscounted?: boolean;
+    discountPercentage?: number;
     createdAt?: any; // Firebase Timestamp
 }
 

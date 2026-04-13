@@ -13,8 +13,12 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-    const phoneNumber = siteConfig.contact.phone; // Config
-    const message = `Hi, I want to order ${product.name} priced at ₹${product.price}`;
+    const discountedPrice = product.isDiscounted
+        ? Math.round(product.price * (1 - (product.discountPercentage || 0) / 100))
+        : product.price;
+
+    const phoneNumber = siteConfig.contact.phone;
+    const message = `Hi, I want to order ${product.name} priced at ₹${discountedPrice}`;
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     return (
@@ -35,13 +39,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
                                 No Image
                             </div>
                         )}
-                        {!product.inStock && (
-                            <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+                        
+                        <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+                            {!product.inStock && (
                                 <div className="bg-amber-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm text-center">
                                     Place order<br />to get it made
                                 </div>
-                            </div>
-                        )}
+                            )}
+                            {product.isDiscounted && (
+                                <div className="bg-red-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm">
+                                    {product.discountPercentage}% OFF
+                                </div>
+                            )}
+                        </div>
+
                         {product.hasFreePattern && (
                             <div className="absolute bottom-2 left-2 bg-secondary text-secondary-foreground text-xs px-2 py-1 rounded-full font-bold shadow-sm">
                                 Free Pattern
@@ -50,11 +61,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
                     </div>
 
                     <CardContent className="p-4 space-y-2 flex-grow">
-                        <div className="flex justify-between items-start">
-                            <h3 className="font-heading font-bold text-lg text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+                        <div className="flex justify-between items-start gap-2">
+                            <h3 className="font-heading font-bold text-lg text-foreground line-clamp-1 group-hover:text-primary transition-colors flex-1">
                                 {product.name}
                             </h3>
-                            <span className="font-bold text-primary">₹{product.price}</span>
+                            <div className="flex flex-col items-end">
+                                {product.isDiscounted ? (
+                                    <>
+                                        <span className="text-xs text-muted-foreground line-through">₹{product.price}</span>
+                                        <span className="font-bold text-primary">₹{discountedPrice}</span>
+                                    </>
+                                ) : (
+                                    <span className="font-bold text-primary">₹{product.price}</span>
+                                )}
+                            </div>
                         </div>
                         <p className="text-sm text-muted-foreground line-clamp-2">
                             {product.description}

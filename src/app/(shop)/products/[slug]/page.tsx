@@ -41,8 +41,12 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
         return notFound();
     }
 
+    const discountedPrice = product.isDiscounted
+        ? Math.round(product.price * (1 - (product.discountPercentage || 0) / 100))
+        : product.price;
+
     const phoneNumber = siteConfig.contact.phone;
-    const message = `Hi, I want to order ${product.name} priced at ₹${product.price}`;
+    const message = `Hi, I want to order ${product.name} priced at ₹${discountedPrice}`;
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     return (
@@ -55,7 +59,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                     <ArrowLeft size={20} />
                     Back to Catalog
                 </Link>
-
+ 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
                     {/* Image Section */}
                     <div className="space-y-4">
@@ -76,6 +80,11 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                     No Image Available
                                 </div>
                             )}
+                            {product.isDiscounted && (
+                                <div className="absolute top-4 right-4 bg-red-500 text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider shadow-lg z-10 animate-pulse">
+                                    {product.discountPercentage}% OFF
+                                </div>
+                            )}
                         </motion.div>
                         {/* Thumbnails if multiple images (placeholder login) */}
                         {product.images.length > 1 && (
@@ -93,7 +102,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                             </div>
                         )}
                     </div>
-
+ 
                     {/* Details Section */}
                     <div className="space-y-8">
                         <div>
@@ -113,8 +122,14 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                 {product.name}
                             </h1>
                             <div className="flex items-baseline gap-4">
-                                <span className="text-3xl font-bold text-primary">₹{product.price}</span>
-                                {/* <span className="text-lg text-muted-foreground line-through">₹{product.price + 200}</span> */}
+                                {product.isDiscounted ? (
+                                    <>
+                                        <span className="text-3xl font-bold text-primary">₹{discountedPrice}</span>
+                                        <span className="text-xl text-muted-foreground line-through decoration-red-500/50">₹{product.price}</span>
+                                    </>
+                                ) : (
+                                    <span className="text-3xl font-bold text-primary">₹{product.price}</span>
+                                )}
                             </div>
                         </div>
 

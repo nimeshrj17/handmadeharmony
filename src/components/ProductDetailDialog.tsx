@@ -16,8 +16,12 @@ interface ProductDetailDialogProps {
 
 export function ProductDetailDialog({ product, children }: ProductDetailDialogProps) {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const discountedPrice = product.isDiscounted
+        ? Math.round(product.price * (1 - (product.discountPercentage || 0) / 100))
+        : product.price;
+
     const phoneNumber = siteConfig.contact.phone;
-    const message = `Hi, I want to order ${product.name} priced at ₹${product.price}`;
+    const message = `Hi, I want to order ${product.name} priced at ₹${discountedPrice}`;
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     return (
@@ -43,9 +47,21 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                 </div>
                             )}
                             {/* Price Badge Overlay */}
-                            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm z-10">
-                                <span className="font-bold text-lg text-primary">₹{product.price}</span>
+                            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm z-10 flex items-center gap-2">
+                                {product.isDiscounted ? (
+                                    <>
+                                        <span className="text-xs text-muted-foreground line-through">₹{product.price}</span>
+                                        <span className="font-bold text-lg text-primary">₹{discountedPrice}</span>
+                                    </>
+                                ) : (
+                                    <span className="font-bold text-lg text-primary">₹{product.price}</span>
+                                )}
                             </div>
+                            {product.isDiscounted && (
+                                <div className="absolute top-4 right-4 bg-red-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-md backdrop-blur-sm">
+                                    {product.discountPercentage}% OFF
+                                </div>
+                            )}
                         </div>
 
                         {/* Thumbnails */}
@@ -122,7 +138,7 @@ export function ProductDetailDialog({ product, children }: ProductDetailDialogPr
                                 </Button>
                             ) : (
                                 <Button className="w-full rounded-full bg-amber-500 hover:bg-amber-600 text-white gap-2 h-12 text-lg shadow-md hover:shadow-lg transition-all" asChild>
-                                    <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hi, I would like to place an order for ${product.name} priced at ₹${product.price}`)}`} target="_blank" rel="noopener noreferrer">
+                                    <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hi, I would like to place an order for ${product.name} priced at ₹${discountedPrice}`)}`} target="_blank" rel="noopener noreferrer">
                                         <MessageCircle size={20} />
                                         Place Order on WhatsApp
                                     </a>

@@ -41,7 +41,9 @@ export default function AdminPage() {
         freePatternDetails: "",
         material: "100% Cotton",
         careGuide: "Treat it gently—hand wash and let it rest flat to dry 💙",
-        availableColors: []
+        availableColors: [],
+        isDiscounted: false,
+        discountPercentage: 0
     });
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [editingProductId, setEditingProductId] = useState<string | null>(null);
@@ -238,7 +240,9 @@ export default function AdminPage() {
                     freePatternDetails: newProduct.freePatternDetails || "",
                     material: newProduct.material || "100% Cotton",
                     careGuide: newProduct.careGuide || "Treat it gently—hand wash and let it rest flat to dry 💙",
-                    images: newProduct.images || []
+                    images: newProduct.images || [],
+                    isDiscounted: newProduct.isDiscounted || false,
+                    discountPercentage: Number(newProduct.discountPercentage) || 0
                 }, imageFiles);
             }
 
@@ -276,7 +280,9 @@ export default function AdminPage() {
             freePatternDetails: "",
             material: "100% Cotton",
             careGuide: "Treat it gently—hand wash and let it rest flat to dry 💙",
-            availableColors: []
+            availableColors: [],
+            isDiscounted: false,
+            discountPercentage: 0
         });
         setImageFiles([]);
     };
@@ -578,6 +584,40 @@ export default function AdminPage() {
                                             />
                                         )}
                                     </div>
+                                    
+                                    {/* Discount Section */}
+                                    <div className="space-y-4 border p-4 rounded-md bg-primary/5 border-primary/10">
+                                        <div className="flex items-center justify-between">
+                                            <label className="flex items-center gap-2 text-sm font-medium">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={newProduct.isDiscounted || false}
+                                                    onChange={(e) => setNewProduct({ ...newProduct, isDiscounted: e.target.checked })}
+                                                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                                                />
+                                                Apply Discount
+                                            </label>
+                                            {newProduct.isDiscounted && (
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-xs font-semibold text-muted-foreground">Off %:</span>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder="%"
+                                                        value={newProduct.discountPercentage || ""}
+                                                        onChange={(e) => setNewProduct({ ...newProduct, discountPercentage: Number(e.target.value) })}
+                                                        className="w-20 h-8"
+                                                        min="0"
+                                                        max="100"
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                        {newProduct.isDiscounted && (
+                                            <div className="text-xs text-primary font-medium">
+                                                Final Price: ₹{Math.round((newProduct.price || 0) * (1 - (newProduct.discountPercentage || 0) / 100))}
+                                            </div>
+                                        )}
+                                    </div>
 
                                     <div className="flex items-center gap-4">
                                         <label className="flex items-center gap-2 text-sm">
@@ -628,7 +668,17 @@ export default function AdminPage() {
                                         <tr key={product.id} className="hover:bg-muted/10">
                                             <td className="p-4 font-medium">{product.name}</td>
                                             <td className="p-4">{product.category}</td>
-                                            <td className="p-4">₹{product.price}</td>
+                                            <td className="p-4">
+                                                {product.isDiscounted ? (
+                                                    <div className="flex flex-col">
+                                                        <span className="text-muted-foreground line-through text-xs">₹{product.price}</span>
+                                                        <span className="text-primary font-bold">₹{Math.round(product.price * (1 - (product.discountPercentage || 0) / 100))}</span>
+                                                        <span className="text-[10px] text-green-600 font-bold">({product.discountPercentage}% OFF)</span>
+                                                    </div>
+                                                ) : (
+                                                    <span>₹{product.price}</span>
+                                                )}
+                                            </td>
                                             <td className="p-4">
                                                 <div className="flex flex-col gap-2">
                                                     <button
@@ -639,6 +689,16 @@ export default function AdminPage() {
                                                         className={`px-2 py-1 rounded-full text-xs font-bold border ${product.inStock ? "bg-green-100 text-green-700 border-green-200" : "bg-red-100 text-red-700 border-red-200"}`}
                                                     >
                                                         {product.inStock ? "In Stock" : "Out of Stock"}
+                                                    </button>
+                                                    
+                                                    <button
+                                                        onClick={async () => {
+                                                            await updateProduct(product.id, { isDiscounted: !product.isDiscounted });
+                                                            fetchProducts();
+                                                        }}
+                                                        className={`px-2 py-1 rounded-full text-xs font-bold border ${product.isDiscounted ? "bg-green-100 text-green-700 border-green-200" : "bg-muted text-muted-foreground border-transparent"}`}
+                                                    >
+                                                        {product.isDiscounted ? "Sale On" : "No Sale"}
                                                     </button>
 
                                                     <button
