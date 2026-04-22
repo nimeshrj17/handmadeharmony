@@ -16,7 +16,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Brand */}
                     <div className="space-y-4">
-                        <h3 className="font-heading text-xl font-bold text-primary">Handmade Harmony</h3>
+                        <h3 className="font-heading text-xl font-bold text-primary">Crochet Nook by Dharita</h3>
                         <p className="text-sm text-muted-foreground max-w-xs">
                             Smile stitched. Joy delivered. Handcrafted crochet dolls and accessories made with love by Dharita.
                         </p>
@@ -70,7 +70,7 @@ const Footer = () => {
                         </div>
                         <div className="mt-4 space-y-1">
                             <p className="text-xs text-muted-foreground">
-                                © {currentYear} Crochetnook by Dharita. All rights reserved.
+                                © {currentYear} Crochet Nook by Dharita. All rights reserved.
                             </p>
                             <p className="text-xs text-muted-foreground">
                                 Built with <span className="text-red-500">❤️</span> by <a href="https://www.stacktribe.dev/" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-primary transition-colors">StackTribe</a>

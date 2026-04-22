@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!pageData) {
         return {
-            title: "Page Not Found | Handmade Harmony",
+            title: "Page Not Found | Crochet Nook by Dharita",
         };
     }
 
@@ -59,12 +59,12 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
         "description": pageData.description,
         "author": {
             "@type": "Organization",
-            "name": "Handmade Harmony",
+            "name": "Crochet Nook by Dharita",
             "url": "https://www.crochetnookbydharita.co.in"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "Handmade Harmony",
+            "name": "Crochet Nook by Dharita",
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://www.crochetnookbydharita.co.in/logo.jpg"
@@ -143,7 +143,7 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
                         <>
                             <section id="basics">
                                 <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. The Basics of {pageData.topic}</h2>
-                                <p>Welcome to your complete guided path for <strong>{pageData.topic}</strong>. Getting started with crochet doesn't have to be overwhelming. At Handmade Harmony, we believe anyone can master the art of crochet with the right foundation.</p>
+                                <p>Welcome to your complete guided path for <strong>{pageData.topic}</strong>. Getting started with crochet doesn't have to be overwhelming. At Crochet Nook by Dharita, we believe anyone can master the art of crochet with the right foundation.</p>
                             </section>
 
                             <section id="tools">
@@ -223,14 +223,14 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
 
                             <section id="selling-online">
                                 <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. Where to Sell Your Products</h2>
-                                <p>Start by tapping into Instagram and local WhatsApp groups. As you scale, platforms like Etsy India, Amazon Karigar, or your own dedicated e-commerce storefront (just like Handmade Harmony) will help you reach a massive, dedicated audience.</p>
+                                <p>Start by tapping into Instagram and local WhatsApp groups. As you scale, platforms like Etsy India, Amazon Karigar, or your own dedicated e-commerce storefront (just like Crochet Nook by Dharita) will help you reach a massive, dedicated audience.</p>
                             </section>
                         </>
                     ) : (
                         <>
                             <section id="introduction">
                                 <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">1. Introduction to {pageData.topic}</h2>
-                                <p>Welcome to the ultimate guide on <strong>{pageData.topic}</strong>. Whether you are shopping for high-quality handmade crochet items or seeking inspiration for your next project, {pageData.topic} is a wonderful world to explore. At Handmade Harmony, we specialize in authentic, adorable crochet craftsmanship.</p>
+                                <p>Welcome to the ultimate guide on <strong>{pageData.topic}</strong>. Whether you are shopping for high-quality handmade crochet items or seeking inspiration for your next project, {pageData.topic} is a wonderful world to explore. At Crochet Nook by Dharita, we specialize in authentic, adorable crochet craftsmanship.</p>
                             </section>
 
                             <section id="why-popular">
@@ -240,12 +240,12 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
 
                             {/* Secondary Image */}
                             <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg my-12">
-                                <Image src="/images/hero-krishna.jpg" alt={`Discover ${pageData.topic} at Handmade Harmony`} fill className="object-cover" />
+                                <Image src="/images/hero-krishna.jpg" alt={`Discover ${pageData.topic} at Crochet Nook by Dharita`} fill className="object-cover" />
                             </div>
 
                             <section id="exploring">
                                 <h2 className="text-3xl font-heading font-bold text-foreground capitalize mb-4">3. Exploring {pageData.topic}</h2>
-                                <p>When browsing for {pageData.topic}, look out for tight, clean stitching and high-quality yarn that won't pill or fuzz easily. Our artisan, Dharita, ensures every piece shipped from Handmade Harmony meets rigorous quality checks.</p>
+                                <p>When browsing for {pageData.topic}, look out for tight, clean stitching and high-quality yarn that won't pill or fuzz easily. Our artisan, Dharita, ensures every piece shipped from Crochet Nook by Dharita meets rigorous quality checks.</p>
                                 <p className="mt-4">If {pageData.topic} has inspired you to pick up a hook yourself, don't miss our <Link href="/how-to-crochet-for-beginners" className="text-primary hover:underline font-medium">crochet beginner guide</Link>!</p>
                             </section>
                         </>
@@ -300,7 +300,7 @@ export default async function ProgrammaticSeoPage({ params }: Props) {
                     <section id="start-journey" className="mt-16 text-center border-t border-border pt-16">
                         <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground capitalize mb-6">8. Start Your Crochet Journey Today</h2>
                         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                            Whether you're shopping for the perfect gift or starting a new hobby, Handmade Harmony is here to inspire and support you.
+                            Whether you're shopping for the perfect gift or starting a new hobby, Crochet Nook by Dharita is here to inspire and support you.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button size="lg" className="rounded-full bg-primary text-white hover:scale-105 transition-transform px-8" asChild>

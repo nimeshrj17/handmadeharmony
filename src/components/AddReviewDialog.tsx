@@ -70,7 +70,7 @@ export function AddReviewDialog({ trigger, onReviewAdded }: AddReviewDialogProps
                 <DialogHeader>
                     <DialogTitle>Leave a Review</DialogTitle>
                     <DialogDescription>
-                        Share your experience with Handmade Harmony.
+                        Share your experience with Crochet Nook by Dharita.
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 py-4">

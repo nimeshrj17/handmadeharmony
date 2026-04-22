@@ -59,8 +59,8 @@ const About = () => {
                             <p>
                                 There was no big plan — just practice, patience, and plenty of undone stitches. I frogged projects, fixed tiny details at midnight, and kept learning with every loop.
                             </p>
-                            <p>
-                                Somewhere between those learning phases and finished plushies, Handmade Harmony was born — a space where yarn transforms into tiny companions filled with warmth and personality.
+                             <p>
+                                Somewhere between those learning phases and finished plushies, Crochet Nook by Dharita was born — a space where yarn transforms into tiny companions filled with warmth and personality.
                             </p>
                             <p>
                                 Each piece is thoughtfully handcrafted with premium yarn, precision, and lots of love.

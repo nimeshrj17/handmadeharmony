@@ -30,7 +30,7 @@ const Hero = () => {
                         </h1>
                         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                             Discover the magic of handmade crochet. From adorable dolls to charming accessories,
-                            Handmade Harmony brings warmth and cuteness to your world.
+                            Crochet Nook by Dharita brings warmth and cuteness to your world.
                         </p>
                     </motion.div>
 

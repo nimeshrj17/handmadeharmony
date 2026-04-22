@@ -35,13 +35,13 @@ const Navbar = () => {
                     <div className="relative w-10 h-10 overflow-hidden rounded-full border border-primary/10 shadow-sm">
                         <Image
                             src="/logo.jpg"
-                            alt="Handmade Harmony Logo"
+                            alt="Crochet Nook by Dharita Logo"
                             fill
                             className="object-cover"
                         />
                     </div>
                     <span className="font-heading text-lg font-bold text-foreground md:text-xl">
-                        Handmade Harmony
+                        Crochet Nook by Dharita
                     </span>
                 </Link>
 
@@ -82,7 +82,7 @@ const Navbar = () => {
                                     <SheetHeader className="sr-only">
                                         <SheetTitle>Navigation Menu</SheetTitle>
                                         <SheetDescription id="mobile-menu-description">
-                                            Access all sections of the Handmade Harmony website including Home, Shop, and more.
+                                            Access all sections of the Crochet Nook by Dharita website including Home, Shop, and more.
                                         </SheetDescription>
                                     </SheetHeader>
                                     <div className="flex flex-col gap-4 mt-8">

@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
                     <div className="prose prose-stone dark:prose-invert max-w-none space-y-6 text-muted-foreground">
                         <section>
                             <p>
-                                Handmade Harmony respects your privacy. Any personal information you share with us will only be used to improve our services and provide you with updates or offers.
+                                Crochet Nook by Dharita respects your privacy. Any personal information you share with us will only be used to improve our services and provide you with updates or offers.
                             </p>
                             <p>
                                 We may collect details such as your name, contact information, and preferences to better serve you. This information helps us keep records, enhance our products, and occasionally reach out for feedback.

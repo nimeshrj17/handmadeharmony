@@ -9,7 +9,7 @@ export interface SeoPageData {
     h1: string;
 }
 
-const BRAND_NAME = "Handmade Harmony";
+const BRAND_NAME = "Crochet Nook by Dharita";
 
 const capitalize = (str: string) => str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
@@ -34,7 +34,7 @@ const generateDescription = (topic: string, category: SeoCategory) => {
         case 'pattern': return `Looking for ${topic}? Browse our curated list of easy, intermediate, and advanced crochet patterns. Create beautiful handmade items yourself!`;
         case 'business': return `Thinking about a crochet business? Learn everything about ${topic}, from pricing and selling online to creating high-demand products in India.`;
         case 'materials': return `Looking for ${topic}? Read our complete guide on exactly what supplies to buy, how to choose the right materials, and the best places to get them in India.`;
-        default: return `Looking for ${topic}? Discover beautiful handmade crochet products, home decor, and fashion accessories at Handmade Harmony India. Shop our unique collection!`;
+        default: return `Looking for ${topic}? Discover beautiful handmade crochet products, home decor, and fashion accessories at Crochet Nook by Dharita India. Shop our unique collection!`;
     }
 };
 
